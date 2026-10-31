@@ -15,6 +15,7 @@ import Dashboard from './pages/admin/Dashboard';
 import AdminCars from './pages/admin/AdminCars';
 import AdminBookings from './pages/admin/AdminBookings';
 import AdminUsers from './pages/admin/AdminUsers';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/not-found" element={<NotFound />} />
 
         {/* Protected User Routes */}
         <Route element={<ProtectedRoute />}>

@@ -20,30 +20,30 @@ const Footer = () => {
               Rahatlığınız və təhlükəsizliyiniz bizim üçün önəmlidir.
             </p>
             <div className="flex items-center gap-3">
-              <a
-                href="#"
+              <Link
+                to="/not-found"
                 className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
               >
                 <Facebook className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/not-found"
                 className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
               >
                 <Instagram className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/not-found"
                 className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
               >
                 <Twitter className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/not-found"
                 className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
               >
                 <Youtube className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
           </div>
 
