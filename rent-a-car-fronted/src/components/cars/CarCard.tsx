@@ -9,7 +9,7 @@ interface CarCardProps {
 const CarCard = ({ car }: CarCardProps) => {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#111111] transition-all duration-300 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5">
-      <div className="relative h-52 overflow-hidden">
+      <Link to={`/cars/${car.id}`} className="relative block h-52 overflow-hidden">
         <img
           src={car.image}
           alt={`${car.brand} ${car.model}`}
@@ -26,7 +26,7 @@ const CarCard = ({ car }: CarCardProps) => {
             </span>
           </div>
         )}
-      </div>
+      </Link>
 
       <div className="p-5">
         <div className="mb-1 text-sm text-gray-400">{car.year}</div>
