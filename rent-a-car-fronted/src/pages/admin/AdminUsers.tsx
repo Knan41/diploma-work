@@ -38,6 +38,7 @@ const AdminUsers = () => {
         <tr>
           <th className="p-2">Ad</th>
           <th className="p-2">Email</th>
+          <th className="p-2">Telefon</th>
           <th className="p-2">Rol</th>
           <th className="p-2"></th>
         </tr>
@@ -47,6 +48,7 @@ const AdminUsers = () => {
           <tr key={u.id} className="border-t border-white/10">
             <td className="p-2">{u.name}</td>
             <td className="p-2">{u.email}</td>
+            <td className="p-2">{u.phone || '—'}</td>
             <td className="p-2">
               <button className="text-amber-500" onClick={() => toggleRole(u.id, u.role)}>{u.role}</button>
             </td>
