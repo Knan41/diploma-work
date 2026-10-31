@@ -7,6 +7,7 @@ import {
   Car,
   CalendarDays,
   Users,
+  Mail,
   LogOut,
   Menu,
   X,
@@ -34,6 +35,7 @@ const AdminLayout = () => {
     { to: '/admin/cars', label: 'Maşınlar', icon: Car },
     { to: '/admin/bookings', label: 'Rezervasiyalar', icon: CalendarDays },
     { to: '/admin/users', label: 'İstifadəçilər', icon: Users },
+    { to: '/admin/messages', label: 'Mesajlar', icon: Mail },
   ];
 
   const isActive = (path: string) => {

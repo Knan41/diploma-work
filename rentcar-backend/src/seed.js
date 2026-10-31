@@ -49,7 +49,7 @@ const addDays = (n) => {
   return d.toISOString().slice(0, 10);
 };
 
-db.exec('DELETE FROM bookings; DELETE FROM cars; DELETE FROM users; DELETE FROM sqlite_sequence;');
+db.exec('DELETE FROM messages; DELETE FROM bookings; DELETE FROM cars; DELETE FROM users; DELETE FROM sqlite_sequence;');
 
 const insUser = db.prepare('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)');
 insUser.run('Admin', 'admin@rentcar.az', bcrypt.hashSync('admin123', 10), 'admin');
