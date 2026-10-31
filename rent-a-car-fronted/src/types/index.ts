@@ -102,6 +102,7 @@ export interface Booking {
   endDate: string;
   totalPrice: number;
   status: 'pending' | 'approved' | 'cancelled';
+  cancelledBy?: 'user' | 'admin' | null;
   createdAt: string;
   car: {
     id: number;
