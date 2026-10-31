@@ -67,4 +67,17 @@ router.put('/profile', authRequired, (req, res) => {
   res.json(user);
 });
 
+// DELETE /api/auth/me  { password }  (istifadəçi öz hesabını silir; admin silə bilməz)
+router.delete('/me', authRequired, (req, res) => {
+  if (req.user.role === 'admin')
+    return res.status(403).json({ message: 'Admin hesabı silinə bilməz' });
+  const { password } = req.body || {};
+  if (!password) return res.status(400).json({ message: 'Təsdiq üçün parolu daxil edin' });
+  const row = db.prepare('SELECT password FROM users WHERE id = ?').get(req.user.id);
+  if (!row || !bcrypt.compareSync(password, row.password))
+    return res.status(401).json({ message: 'Parol yanlışdır' });
+  db.prepare('DELETE FROM users WHERE id = ?').run(req.user.id);
+  res.json({ message: 'Hesab silindi' });
+});
+
 module.exports = router;

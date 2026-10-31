@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useUpdateProfileMutation } from '../store/api/authApi';
+import { useNavigate } from 'react-router-dom';
+import { useUpdateProfileMutation, useDeleteAccountMutation } from '../store/api/authApi';
+import { apiSlice } from '../store/api/apiSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { selectCurrentUser, setCredentials } from '../store/slices/authSlice';
+import { selectCurrentUser, setCredentials, logout } from '../store/slices/authSlice';
 import { errorMessage } from '../utils/errorMessage';
 
 const Profile = () => {
@@ -10,6 +12,24 @@ const Profile = () => {
   const token = useAppSelector((state) => state.auth.token);
   const dispatch = useAppDispatch();
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+
+  const [deleteAccount, { isLoading: deleting }] = useDeleteAccountMutation();
+  const navigate = useNavigate();
+  const [deletePassword, setDeletePassword] = useState('');
+
+  const handleDeleteAccount = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!confirm('Hesabınız və bütün rezervasiyalarınız həmişəlik silinəcək. Davam edək?')) return;
+    try {
+      await deleteAccount({ password: deletePassword }).unwrap();
+      dispatch(logout());
+      dispatch(apiSlice.util.resetApiState());
+      toast.success('Hesabınız silindi');
+      navigate('/');
+    } catch (err) {
+      toast.error(errorMessage(err));
+    }
+  };
 
   const [name, setName] = useState(user?.name || '');
   const [password, setPassword] = useState('');
@@ -35,6 +55,17 @@ const Profile = () => {
         <input type="password" className="input w-full" placeholder="Yeni parol (istəyə görə)" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button className="btn w-full" disabled={isLoading}>Yadda saxla</button>
       </form>
+
+      {user?.role !== 'admin' && (
+        <form onSubmit={handleDeleteAccount} className="card mt-6 space-y-3 border-red-500/30">
+          <h2 className="text-lg font-semibold text-red-400">Hesabı sil</h2>
+          <p className="text-sm text-gray-400">
+            Hesabınız və bütün rezervasiyalarınız həmişəlik silinəcək. Təsdiq üçün parolunuzu daxil edin.
+          </p>
+          <input type="password" className="input w-full" placeholder="Parol" value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} required />
+          <button className="btn-danger w-full" disabled={deleting}>Hesabımı sil</button>
+        </form>
+      )}
     </div>
   );
 };
