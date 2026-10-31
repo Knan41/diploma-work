@@ -1,9 +1,12 @@
 import toast from 'react-hot-toast';
 import { useGetUsersQuery, useUpdateUserRoleMutation, useDeleteUserMutation } from '../../store/api/usersApi';
+import { useAppSelector } from '../../store/hooks';
+import { selectCurrentUser } from '../../store/slices/authSlice';
 import Loading from '../../components/ui/Loading';
 import { errorMessage } from '../../utils/errorMessage';
 
 const AdminUsers = () => {
+  const me = useAppSelector(selectCurrentUser);
   const { data: users = [], isLoading } = useGetUsersQuery();
   const [updateRole] = useUpdateUserRoleMutation();
   const [deleteUser] = useDeleteUserMutation();
@@ -48,7 +51,11 @@ const AdminUsers = () => {
               <button className="text-amber-500" onClick={() => toggleRole(u.id, u.role)}>{u.role}</button>
             </td>
             <td className="p-2 text-right">
-              <button className="btn-danger" onClick={() => handleDelete(u.id)}>Sil</button>
+              {u.id === me?.id ? (
+                <span className="text-xs text-gray-500">Öz hesabınız</span>
+              ) : (
+                <button className="btn-danger" onClick={() => handleDelete(u.id)}>Sil</button>
+              )}
             </td>
           </tr>
         ))}
