@@ -2,7 +2,22 @@ const express = require('express');
 const db = require('../db');
 const { authRequired, adminOnly } = require('../middleware/auth');
 
+const fs = require('fs');
+const path = require('path');
+
 const router = express.Router();
+
+// Base64 (data URL) şəkli public/images qovluğuna yazır, "/images/..." yolunu qaytarır
+function saveImage(img) {
+  if (!img || typeof img !== 'string' || !img.startsWith('data:image/')) return img || null;
+  const m = img.match(/^data:image\/(png|jpe?g|webp);base64,(.+)$/);
+  if (!m) return null;
+  const dir = path.join(__dirname, '..', '..', 'public', 'images');
+  fs.mkdirSync(dir, { recursive: true });
+  const name = `car-${Date.now()}-${Math.round(Math.random() * 1e6)}.${m[1] === 'jpeg' ? 'jpg' : m[1]}`;
+  fs.writeFileSync(path.join(dir, name), Buffer.from(m[2], 'base64'));
+  return `/images/${name}`;
+}
 
 const toCar = (r) => ({
   id: r.id,
@@ -94,6 +109,7 @@ router.post('/', authRequired, adminOnly, (req, res) => {
   const err = validateCar(req.body);
   if (err) return res.status(400).json({ message: err });
   const b = req.body;
+  if (!b.image) return res.status(400).json({ message: 'Maşının şəkli mütləqdir' });
   const info = db
     .prepare(
       `INSERT INTO cars (brand, model, year, price_per_day, fuel, transmission, seats, category, image, description, engine, horsepower, acceleration, available)
@@ -102,7 +118,7 @@ router.post('/', authRequired, adminOnly, (req, res) => {
     .run(
       b.brand.trim(), b.model.trim(), Number(b.year), Number(b.pricePerDay),
       b.fuel || 'petrol', b.transmission || 'automatic', Number(b.seats) || 5,
-      b.category || 'hybrid', b.image || null, b.description || null,
+      b.category || 'hybrid', saveImage(b.image), b.description || null,
       b.engine || null, b.horsepower ? Number(b.horsepower) : null,
       b.acceleration ? Number(b.acceleration) : null,
       b.available === false ? 0 : 1
@@ -126,7 +142,7 @@ router.put('/:id', authRequired, adminOnly, (req, res) => {
     b.brand ?? row.brand, b.model ?? row.model, Number(b.year ?? row.year),
     Number(b.pricePerDay ?? row.price_per_day), b.fuel ?? row.fuel,
     b.transmission ?? row.transmission, Number(b.seats ?? row.seats),
-    b.category ?? row.category, b.image ?? row.image, b.description ?? row.description,
+    b.category ?? row.category, b.image ? saveImage(b.image) : row.image, b.description ?? row.description,
     b.engine ?? row.engine, b.horsepower === undefined ? row.horsepower : (Number(b.horsepower) || null),
     b.acceleration === undefined ? row.acceleration : (Number(b.acceleration) || null),
     b.available === undefined ? row.available : b.available ? 1 : 0, row.id
