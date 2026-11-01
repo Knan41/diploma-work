@@ -1,0 +1,19 @@
+{
+  "name": "rentcar-backend",
+  "version": "1.0.0",
+  "description": "Rent a Car - diplom isi backend (Express + SQLite + JWT)",
+  "engines": { "node": ">=22.13" },
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning src/server.js",
+    "dev": "node --watch --disable-warning=ExperimentalWarning src/server.js",
+    "seed": "node --disable-warning=ExperimentalWarning src/seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
