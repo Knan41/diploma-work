@@ -16,6 +16,7 @@ npm run dev        # serveri başladır -> http://localhost:5000
 ```
 
 - `npm run seed` istənilən vaxt bazanı ilkin vəziyyətə qaytarır (demo-dan əvvəl faydalıdır).
+- Baza boşdursa (repo təzə yüklənəndə), `npm start` ilkin məlumatları (15 maşın və admin) özü yükləyir, ayrıca `npm run seed` lazım deyil.
 - Server işləyəndə terminalı bağlama. Frontend üçün **ayrıca ikinci terminal** aç.
 - Yoxlamaq üçün brauzerdə aç: http://localhost:5000/api/cars
 - Marka ilə axtarış: http://localhost:5000/api/cars?search=tesla
