@@ -2,7 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-require("./db");
+const db = require("./db");
+
+// Baza boşdursa (məsələn, repo təzə yüklənib), ilkin məlumatları (maşınlar, admin) özü yükləyir
+const isEmpty =
+  db.prepare("SELECT COUNT(*) AS c FROM users").get().c === 0 &&
+  db.prepare("SELECT COUNT(*) AS c FROM cars").get().c === 0;
+if (isEmpty) {
+  console.log("Baza boşdur, ilkin məlumatlar yüklənir...");
+  require("./seed");
+}
 
 const app = express();
 app.set("trust proxy", 1);
