@@ -15,6 +15,7 @@ import Dashboard from './pages/admin/Dashboard';
 import AdminCars from './pages/admin/AdminCars';
 import AdminBookings from './pages/admin/AdminBookings';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminMessages from './pages/admin/AdminMessages';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/admin/cars" element={<AdminCars />} />
           <Route path="/admin/bookings" element={<AdminBookings />} />
           <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/messages" element={<AdminMessages />} />
         </Route>
       </Route>
 

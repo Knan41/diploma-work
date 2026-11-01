@@ -139,3 +139,17 @@ export interface StatsResponse {
   cancelledBookings: number;
   revenue: number;
 }
+
+// Contact messages
+export interface ContactMessage {
+  id: number;
+  name: string;
+  message: string;
+  userId: number | null;
+  createdAt: string;
+}
+
+export interface SendMessageRequest {
+  name: string;
+  message: string;
+}

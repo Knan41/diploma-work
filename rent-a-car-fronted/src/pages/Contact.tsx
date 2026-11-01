@@ -1,15 +1,24 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { useSendMessageMutation } from '../store/api/messagesApi';
+import { errorMessage } from '../utils/errorMessage';
 
 const Contact = () => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [sendMessage, { isLoading }] = useSendMessageMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success('Mesajınız göndərildi');
-    setName('');
-    setMessage('');
+    try {
+      await sendMessage({ name, message }).unwrap();
+      toast.success('Mesajınız göndərildi');
+      setName('');
+      setMessage('');
+    } catch (err) {
+      toast.error(errorMessage(err));
+    }
   };
 
   return (
@@ -20,7 +29,7 @@ const Contact = () => {
       <form onSubmit={handleSubmit} className="card space-y-3">
         <input className="input w-full" placeholder="Adınız" value={name} onChange={(e) => setName(e.target.value)} required />
         <textarea className="input w-full" rows={5} placeholder="Mesajınız" value={message} onChange={(e) => setMessage(e.target.value)} required />
-        <button className="btn w-full">Göndər</button>
+        <button className="btn w-full" disabled={isLoading}>Göndər</button>
       </form>
     </div>
   );
