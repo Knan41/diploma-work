@@ -29,6 +29,14 @@ export const authApi = apiSlice.injectEndpoints({
       query: () => '/auth/me',
     }),
 
+    deleteAccount: builder.mutation<{ message: string }, { password: string }>({
+      query: (body) => ({
+        url: '/auth/me',
+        method: 'DELETE',
+        body,
+      }),
+    }),
+
     updateProfile: builder.mutation<User, UpdateProfileRequest>({
       query: (data) => ({
         url: '/auth/profile',
@@ -44,4 +52,5 @@ export const {
   useRegisterMutation,
   useGetMeQuery,
   useUpdateProfileMutation,
+  useDeleteAccountMutation,
 } = authApi;
