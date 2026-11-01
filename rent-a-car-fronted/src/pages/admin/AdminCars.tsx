@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useGetCarsQuery, useCreateCarMutation, useDeleteCarMutation, useUpdateCarMutation } from '../../store/api/carsApi';
+import { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation } from '../../store/api/categoriesApi';
 import Loading from '../../components/ui/Loading';
 import { errorMessage } from '../../utils/errorMessage';
 
@@ -25,6 +26,34 @@ const AdminCars = () => {
   const [createCar, { isLoading: saving }] = useCreateCarMutation();
   const [updateCar] = useUpdateCarMutation();
   const [deleteCar] = useDeleteCarMutation();
+  const { data: categories = [] } = useGetCategoriesQuery();
+  const [createCategory] = useCreateCategoryMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
+  const [newCategory, setNewCategory] = useState('');
+
+  const handleAddCategory = async () => {
+    if (!newCategory.trim()) return;
+    try {
+      const created = await createCategory({ label: newCategory }).unwrap();
+      setCategory(created.value);
+      setNewCategory('');
+      toast.success('Kateqoriya əlavə edildi');
+    } catch (err) {
+      toast.error(errorMessage(err));
+    }
+  };
+
+  const handleDeleteCategory = async (id: number, value: string) => {
+    if (!confirm('Kateqoriyanı silmək istədiyinizə əminsiniz?')) return;
+    try {
+      await deleteCategory(id).unwrap();
+      if (category === value) setCategory('hybrid');
+      toast.success('Kateqoriya silindi');
+    } catch (err) {
+      toast.error(errorMessage(err));
+    }
+  };
+
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [year, setYear] = useState('2024');
@@ -178,11 +207,39 @@ const AdminCars = () => {
           </Field>
           <Field label="Kateqoriya">
             <select className="input" value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="hybrid">hybrid</option>
-              <option value="electric">electric</option>
-              <option value="sport">sport</option>
+              {categories.map((c) => (
+                <option key={c.value} value={c.value}>{c.label}</option>
+              ))}
             </select>
           </Field>
+        </div>
+
+        {/* Kateqoriyalar */}
+        <div className="space-y-2 rounded-lg border border-white/10 p-4">
+          <p className="text-sm font-medium text-white">Kateqoriyalar</p>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((c) => (
+              <span key={c.id} className="flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-sm text-gray-300">
+                {c.label}
+                <button type="button" className="text-red-400 hover:text-red-300" title="Sil" onClick={() => handleDeleteCategory(c.id, c.value)}>×</button>
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <input
+              className="input"
+              placeholder="Yeni kateqoriya adı (məs. SUV)"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleAddCategory();
+                }
+              }}
+            />
+            <button type="button" className="btn" onClick={handleAddCategory}>Kateqoriya əlavə et</button>
+          </div>
         </div>
 
         <button className="btn" disabled={saving}>Əlavə et</button>

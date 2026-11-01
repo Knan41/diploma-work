@@ -17,7 +17,7 @@ const CarCard = ({ car }: CarCardProps) => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent" />
         <span className="absolute left-3 top-3 rounded-full bg-amber-500/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-black">
-          {car.category}
+          {car.categoryLabel || car.category}
         </span>
         {!car.available && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/60">

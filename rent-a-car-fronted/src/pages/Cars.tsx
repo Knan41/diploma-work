@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useGetCarsQuery, useGetCarBrandsQuery } from '../store/api/carsApi';
+import { useGetCategoriesQuery } from '../store/api/categoriesApi';
 import CarCard from '../components/cars/CarCard';
 import Loading from '../components/ui/Loading';
 
@@ -9,6 +10,7 @@ const Cars = () => {
   const [category, setCategory] = useState('');
 
   const { data: cars = [], isLoading } = useGetCarsQuery({ search, brand, category });
+  const { data: categories = [] } = useGetCategoriesQuery();
   const { data: brands = [] } = useGetCarBrandsQuery();
 
   return (
@@ -30,9 +32,9 @@ const Cars = () => {
         </select>
         <select className="input" value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="">Bütün kateqoriyalar</option>
-          <option value="hybrid">Hibrid</option>
-          <option value="electric">Elektrik</option>
-          <option value="sport">Sport</option>
+          {categories.map((c) => (
+            <option key={c.value} value={c.value}>{c.label}</option>
+          ))}
         </select>
       </div>
 

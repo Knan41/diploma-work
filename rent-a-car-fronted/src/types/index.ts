@@ -9,6 +9,7 @@ export interface Car {
   transmission: string;
   seats: number;
   category: string;
+  categoryLabel?: string;
   image: string;
   description: string;
   engine: string;
@@ -153,4 +154,11 @@ export interface ContactMessage {
 export interface SendMessageRequest {
   name: string;
   message: string;
+}
+
+// Category
+export interface Category {
+  id: number;
+  value: string;
+  label: string;
 }

@@ -49,7 +49,7 @@ const CarDetail = () => {
 
       <div className="text-white">
         <h1 className="mb-2 text-3xl font-bold">{car.brand} {car.model}</h1>
-        <p className="mb-4 text-gray-400">{car.year} · {car.category}</p>
+        <p className="mb-4 text-gray-400">{car.year} · {car.categoryLabel || car.category}</p>
         <p className="mb-6 text-gray-300">{car.description}</p>
 
         <ul className="mb-6 space-y-1 text-gray-300">
