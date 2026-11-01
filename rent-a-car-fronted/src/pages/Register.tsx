@@ -9,6 +9,7 @@ import { errorMessage } from '../utils/errorMessage';
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [register, { isLoading }] = useRegisterMutation();
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await register({ name, email, password }).unwrap();
+      const res = await register({ name, email, phone, password }).unwrap();
       dispatch(setCredentials(res));
       toast.success('Qeydiyyat uğurludur');
       navigate('/');
@@ -32,6 +33,7 @@ const Register = () => {
       <form onSubmit={handleSubmit} className="card space-y-3">
         <input className="input w-full" placeholder="Ad" value={name} onChange={(e) => setName(e.target.value)} required />
         <input type="email" className="input w-full" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input type="tel" className="input w-full" placeholder="Əlaqə nömrəsi (+994 50 123 45 67)" value={phone} onChange={(e) => setPhone(e.target.value)} required />
         <input type="password" className="input w-full" placeholder="Parol (ən azı 6 simvol)" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button className="btn w-full" disabled={isLoading}>Qeydiyyatdan keç</button>
         <p className="text-sm text-gray-400">

@@ -8,11 +8,13 @@ const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // POST /api/auth/register
 router.post('/register', (req, res) => {
-  const { name, email, password } = req.body || {};
+  const { name, email, password, phone } = req.body || {};
   if (!name || name.trim().length < 2)
     return res.status(400).json({ message: 'Ad ən azı 2 simvol olmalıdır' });
   if (!email || !emailRe.test(email))
     return res.status(400).json({ message: 'Email düzgün deyil' });
+  if (!phone || !/^\+?[0-9\s()-]{7,20}$/.test(phone.trim()))
+    return res.status(400).json({ message: 'Əlaqə nömrəsi düzgün deyil' });
   if (!password || password.length < 6)
     return res.status(400).json({ message: 'Parol ən azı 6 simvol olmalıdır' });
 
@@ -22,8 +24,8 @@ router.post('/register', (req, res) => {
 
   const hash = bcrypt.hashSync(password, 10);
   const info = db
-    .prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'user')")
-    .run(name.trim(), mail, hash);
+    .prepare("INSERT INTO users (name, email, password, role, phone) VALUES (?, ?, ?, 'user', ?)")
+    .run(name.trim(), mail, hash, phone.trim());
 
   const user = db.prepare('SELECT id, name, email, role FROM users WHERE id = ?').get(info.lastInsertRowid);
   res.status(201).json({ token: signToken(user.id), user });

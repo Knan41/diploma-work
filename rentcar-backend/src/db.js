@@ -55,4 +55,7 @@ if (!carCols.includes('engine')) db.exec('ALTER TABLE cars ADD COLUMN engine TEX
 if (!carCols.includes('horsepower')) db.exec('ALTER TABLE cars ADD COLUMN horsepower INTEGER');
 if (!carCols.includes('acceleration')) db.exec('ALTER TABLE cars ADD COLUMN acceleration REAL');
 
+const userCols = db.prepare('PRAGMA table_info(users)').all().map((c) => c.name);
+if (!userCols.includes('phone')) db.exec('ALTER TABLE users ADD COLUMN phone TEXT');
+
 module.exports = db;

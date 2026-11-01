@@ -61,6 +61,7 @@ export interface User {
   name: string;
   email: string;
   role: 'user' | 'admin';
+  phone?: string | null;
   createdAt?: string;
 }
 
@@ -78,6 +79,7 @@ export interface LoginRequest {
 export interface RegisterRequest {
   name: string;
   email: string;
+  phone: string;
   password: string;
 }
 

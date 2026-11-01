@@ -5,11 +5,11 @@ const { authRequired, adminOnly } = require('../middleware/auth');
 const router = express.Router();
 router.use(authRequired, adminOnly);
 
-const toUser = (r) => ({ id: r.id, name: r.name, email: r.email, role: r.role, createdAt: r.created_at });
+const toUser = (r) => ({ id: r.id, name: r.name, email: r.email, role: r.role, phone: r.phone, createdAt: r.created_at });
 
 // GET /api/users
 router.get('/', (req, res) => {
-  res.json(db.prepare('SELECT id, name, email, role, created_at FROM users ORDER BY id').all().map(toUser));
+  res.json(db.prepare('SELECT id, name, email, role, phone, created_at FROM users ORDER BY id').all().map(toUser));
 });
 
 // PATCH /api/users/:id/role   { role: 'user' | 'admin' }
