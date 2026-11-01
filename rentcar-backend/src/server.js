@@ -7,7 +7,7 @@ require("./db");
 const app = express();
 app.set("trust proxy", 1);
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "8mb" }));
 
 // Şəkillər public/images qovluğundan verilir
 app.use(
@@ -43,6 +43,8 @@ app.use("/api/cars", require("./routes/cars"));
 app.use("/api/bookings", require("./routes/bookings"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/stats", require("./routes/stats"));
+app.use("/api/messages", require("./routes/messages"));
+app.use("/api/categories", require("./routes/categories"));
 
 app.use((req, res) =>
   res.status(404).json({ message: "Səhifə tapılmadı" }),

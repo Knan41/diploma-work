@@ -37,6 +37,14 @@ db.exec(`
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    message TEXT NOT NULL,
+    user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE TABLE IF NOT EXISTS bookings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -54,5 +62,23 @@ const carCols = db.prepare('PRAGMA table_info(cars)').all().map((c) => c.name);
 if (!carCols.includes('engine')) db.exec('ALTER TABLE cars ADD COLUMN engine TEXT');
 if (!carCols.includes('horsepower')) db.exec('ALTER TABLE cars ADD COLUMN horsepower INTEGER');
 if (!carCols.includes('acceleration')) db.exec('ALTER TABLE cars ADD COLUMN acceleration REAL');
+
+const userCols = db.prepare('PRAGMA table_info(users)').all().map((c) => c.name);
+if (!userCols.includes('phone')) db.exec('ALTER TABLE users ADD COLUMN phone TEXT');
+
+const bookCols = db.prepare('PRAGMA table_info(bookings)').all().map((c) => c.name);
+if (!bookCols.includes('cancelled_by')) db.exec('ALTER TABLE bookings ADD COLUMN cancelled_by TEXT');
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    value TEXT NOT NULL UNIQUE,
+    label TEXT NOT NULL
+  );
+`);
+const insCat = db.prepare('INSERT OR IGNORE INTO categories (value, label) VALUES (?, ?)');
+[['hybrid', 'Hibrid'], ['electric', 'Elektrik'], ['sport', 'Sport']].forEach(([v, l]) => insCat.run(v, l));
+// Köhnə maşınlarda başqa kateqoriya varsa, onu da siyahıya əlavə edir
+db.prepare('SELECT DISTINCT category FROM cars WHERE category IS NOT NULL').all().forEach((r) => insCat.run(r.category, r.category));
 
 module.exports = db;
