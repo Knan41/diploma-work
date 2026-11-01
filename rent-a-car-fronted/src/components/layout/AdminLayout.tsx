@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
@@ -14,8 +15,10 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
 
 const AdminLayout = () => {
+  const { t } = useTranslation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,16 +29,16 @@ const AdminLayout = () => {
     dispatch(logout());
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    toast.success('Uğurla çıxış edildi');
+    toast.success(t('nav.logoutSuccess'));
     navigate('/');
   };
 
   const sidebarLinks = [
-    { to: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-    { to: '/admin/cars', label: 'Maşınlar', icon: Car },
-    { to: '/admin/bookings', label: 'Rezervasiyalar', icon: CalendarDays },
-    { to: '/admin/users', label: 'İstifadəçilər', icon: Users },
-    { to: '/admin/messages', label: 'Mesajlar', icon: Mail },
+    { to: '/admin', label: t('admin.dashboard'), icon: LayoutDashboard },
+    { to: '/admin/cars', label: t('nav.cars'), icon: Car },
+    { to: '/admin/bookings', label: t('admin.bookings'), icon: CalendarDays },
+    { to: '/admin/users', label: t('admin.users'), icon: Users },
+    { to: '/admin/messages', label: t('admin.messages'), icon: Mail },
   ];
 
   const isActive = (path: string) => {
@@ -104,14 +107,14 @@ const AdminLayout = () => {
             className="mb-2 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
           >
             <ChevronLeft className="h-5 w-5" />
-            Sayta Qayıt
+            {t('admin.backToSite')}
           </Link>
           <button
             onClick={handleLogout}
             className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10"
           >
             <LogOut className="h-5 w-5" />
-            Çıxış
+            {t('nav.logout')}
           </button>
         </div>
       </aside>
@@ -126,8 +129,9 @@ const AdminLayout = () => {
           >
             <Menu className="h-5 w-5" />
           </button>
-          <h1 className="text-lg font-semibold text-white lg:text-xl">Admin Panel</h1>
+          <h1 className="text-lg font-semibold text-white lg:text-xl">{t('nav.adminPanel')}</h1>
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-black">
               {user?.name?.charAt(0).toUpperCase()}
             </div>

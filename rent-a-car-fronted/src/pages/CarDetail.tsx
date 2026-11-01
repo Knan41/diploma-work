@@ -7,8 +7,10 @@ import { useAppSelector } from '../store/hooks';
 import { selectIsAuthenticated } from '../store/slices/authSlice';
 import Loading from '../components/ui/Loading';
 import { errorMessage } from '../utils/errorMessage';
+import { useTranslation } from 'react-i18next';
 
 const CarDetail = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -21,7 +23,7 @@ const CarDetail = () => {
   const [endDate, setEndDate] = useState('');
 
   if (isLoading) return <Loading />;
-  if (!car) return <p className="p-10 text-gray-400">Maşın tapılmadı.</p>;
+  if (!car) return <p className="p-10 text-gray-400">{t('common.carNotFound')}</p>;
 
   // Neçə gün və ümumi qiymət
   let days = 0;
@@ -36,7 +38,7 @@ const CarDetail = () => {
     }
     try {
       await createBooking({ carId: car.id, startDate, endDate }).unwrap();
-      toast.success('Rezervasiya göndərildi');
+      toast.success(t('carDetail.booked'));
       navigate('/my-bookings');
     } catch (err) {
       toast.error(errorMessage(err));
@@ -53,33 +55,33 @@ const CarDetail = () => {
         <p className="mb-6 text-gray-300">{car.description}</p>
 
         <ul className="mb-6 space-y-1 text-gray-300">
-          <li>Mühərrik: {car.engine}</li>
-          <li>Güc: {car.horsepower} at gücü</li>
-          <li>Yanacaq: {car.fuel}</li>
-          <li>Ötürücü: {car.transmission}</li>
-          <li>Oturacaq: {car.seats}</li>
+          <li>{t('carDetail.engine')}: {car.engine}</li>
+          <li>{t('carDetail.power')}: {car.horsepower} {t('carDetail.hp')}</li>
+          <li>{t('carDetail.fuel')}: {t(`fuel.${car.fuel}`, { defaultValue: car.fuel })}</li>
+          <li>{t('carDetail.transmission')}: {t(`transmission.${car.transmission}`, { defaultValue: car.transmission })}</li>
+          <li>{t('carDetail.seats')}: {car.seats}</li>
         </ul>
 
-        <p className="mb-6 text-2xl font-bold text-amber-500">₼{car.pricePerDay} / gün</p>
+        <p className="mb-6 text-2xl font-bold text-amber-500">₼{car.pricePerDay} / {t('common.day')}</p>
 
         <div className="card space-y-3">
-          <h2 className="text-lg font-semibold">Rezerv et</h2>
+          <h2 className="text-lg font-semibold">{t('carDetail.book')}</h2>
           <input type="date" className="input w-full" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
           <input type="date" className="input w-full" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
           {days > 0 && (
-            <p className="text-gray-300">{days} gün · Cəmi: ₼{days * car.pricePerDay}</p>
+            <p className="text-gray-300">{t('common.dayCount', { count: days })} · {t('carDetail.total')}: ₼{days * car.pricePerDay}</p>
           )}
           <button
             className="btn w-full"
             disabled={!car.available || !startDate || !endDate || saving}
             onClick={handleBook}
           >
-            {car.available ? 'Rezerv et' : 'Mövcud deyil'}
+            {car.available ? t('carDetail.book') : t('common.notAvailable')}
           </button>
 
           {booked.length > 0 && (
             <div className="text-sm text-gray-400">
-              <p>Tutulmuş tarixlər:</p>
+              <p>{t('carDetail.bookedDates')}</p>
               {booked.map((b, i) => (
                 <p key={i}>{b.startDate} — {b.endDate}</p>
               ))}

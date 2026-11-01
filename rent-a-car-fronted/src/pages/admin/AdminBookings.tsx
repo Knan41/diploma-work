@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { useGetAllBookingsQuery, useUpdateBookingStatusMutation } from '../../store/api/bookingsApi';
 import Loading from '../../components/ui/Loading';
@@ -5,13 +6,14 @@ import { errorMessage } from '../../utils/errorMessage';
 import type { Booking } from '../../types';
 
 const AdminBookings = () => {
+  const { t } = useTranslation();
   const { data: bookings = [], isLoading } = useGetAllBookingsQuery();
   const [updateStatus] = useUpdateBookingStatusMutation();
 
   const changeStatus = async (id: number, status: Booking['status']) => {
     try {
       await updateStatus({ id, status }).unwrap();
-      toast.success('Status dəyişdi');
+      toast.success(t('adminBookings.statusChanged'));
     } catch (err) {
       toast.error(errorMessage(err));
     }
@@ -23,11 +25,11 @@ const AdminBookings = () => {
     <table className="w-full text-left text-sm text-gray-300">
       <thead className="text-gray-400">
         <tr>
-          <th className="p-2">Müştəri</th>
-          <th className="p-2">Maşın</th>
-          <th className="p-2">Tarix</th>
-          <th className="p-2">Qiymət</th>
-          <th className="p-2">Status</th>
+          <th className="p-2">{t('adminBookings.customer')}</th>
+          <th className="p-2">{t('adminBookings.car')}</th>
+          <th className="p-2">{t('adminBookings.date')}</th>
+          <th className="p-2">{t('adminBookings.price')}</th>
+          <th className="p-2">{t('adminBookings.status')}</th>
         </tr>
       </thead>
       <tbody>
@@ -41,16 +43,16 @@ const AdminBookings = () => {
               <select
                 className="input"
                 disabled={b.status === 'cancelled' && b.cancelledBy === 'user'}
-                title={b.status === 'cancelled' && b.cancelledBy === 'user' ? 'İstifadəçi ləğv edib, bərpa etmək olmaz' : undefined}
+                title={b.status === 'cancelled' && b.cancelledBy === 'user' ? t('adminBookings.userCancelledTitle') : undefined}
                 value={b.status}
                 onChange={(e) => changeStatus(b.id, e.target.value as Booking['status'])}
               >
-                <option value="pending">Gözləyir</option>
-                <option value="approved">Təsdiqlənib</option>
-                <option value="cancelled">Ləğv edilib</option>
+                <option value="pending">{t('status.pending')}</option>
+                <option value="approved">{t('status.approved')}</option>
+                <option value="cancelled">{t('status.cancelled')}</option>
               </select>
               {b.status === 'cancelled' && b.cancelledBy === 'user' && (
-                <span className="ml-2 text-xs text-gray-500">İstifadəçi ləğv edib</span>
+                <span className="ml-2 text-xs text-gray-500">{t('adminBookings.userCancelled')}</span>
               )}
             </td>
           </tr>
