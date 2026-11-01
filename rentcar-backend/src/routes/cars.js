@@ -19,7 +19,10 @@ function saveImage(img) {
   return `/images/${name}`;
 }
 
-const toCar = (r) => ({
+const categoryLabels = () =>
+  Object.fromEntries(db.prepare('SELECT value, label FROM categories').all().map((c) => [c.value, c.label]));
+
+const toCar = (r, labels = categoryLabels()) => ({
   id: r.id,
   brand: r.brand,
   model: r.model,
@@ -29,6 +32,7 @@ const toCar = (r) => ({
   transmission: r.transmission,
   seats: r.seats,
   category: r.category,
+  categoryLabel: labels[r.category] || r.category,
   image: r.image,
   description: r.description,
   engine: r.engine,
@@ -39,7 +43,6 @@ const toCar = (r) => ({
 
 const FUELS = ['petrol', 'diesel', 'hybrid', 'electric'];
 const TRANSMISSIONS = ['automatic', 'manual'];
-const CATEGORIES = ['hybrid', 'electric', 'sport'];
 
 function validateCar(body, partial = false) {
   const b = body || {};
@@ -53,7 +56,8 @@ function validateCar(body, partial = false) {
   if (b.fuel !== undefined && !FUELS.includes(b.fuel)) return `fuel: ${FUELS.join(', ')}`;
   if (b.transmission !== undefined && !TRANSMISSIONS.includes(b.transmission))
     return `transmission: ${TRANSMISSIONS.join(', ')}`;
-  if (b.category !== undefined && !CATEGORIES.includes(b.category)) return `category: ${CATEGORIES.join(', ')}`;
+  if (b.category !== undefined && !db.prepare('SELECT 1 FROM categories WHERE value = ?').get(b.category))
+    return 'Belə kateqoriya yoxdur';
   return null;
 }
 
@@ -76,7 +80,8 @@ router.get('/', (req, res) => {
   if (available === 'true') where.push('available = 1');
 
   const sql = `SELECT * FROM cars ${where.length ? 'WHERE ' + where.join(' AND ') : ''} ORDER BY id DESC`;
-  res.json(db.prepare(sql).all(...params).map(toCar));
+  const labels = categoryLabels();
+  res.json(db.prepare(sql).all(...params).map((r) => toCar(r, labels)));
 });
 
 // GET /api/cars/brands  (filtr üçün markalar)

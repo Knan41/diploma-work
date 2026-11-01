@@ -51,8 +51,12 @@ const addDays = (n) => {
 
 db.exec('DELETE FROM messages; DELETE FROM bookings; DELETE FROM cars; DELETE FROM users; DELETE FROM sqlite_sequence;');
 
+const ADMIN_NAME = process.env.ADMIN_NAME || 'Admin';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@rentcar.az';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+
 const insUser = db.prepare('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)');
-insUser.run('Admin', 'admin@rentcar.az', bcrypt.hashSync('admin123', 10), 'admin');
+insUser.run(ADMIN_NAME, ADMIN_EMAIL, bcrypt.hashSync(ADMIN_PASSWORD, 10), 'admin');
 insUser.run('Əli Məmmədov', 'user@rentcar.az', bcrypt.hashSync('user123', 10), 'user');
 insUser.run('Leyla Həsənova', 'leyla@rentcar.az', bcrypt.hashSync('user123', 10), 'user');
 
@@ -81,5 +85,5 @@ bookings.forEach(([u, c, s, e, status]) => {
 console.log('\nReal şəkil qoymaq üçün şəkli public/images qovluğuna bu adla at (jpg, png və ya webp), sonra npm run seed işlət:');
 cars.forEach((c) => console.log('  ' + slugOf(c[0], c[1]) + '.jpg'));
 console.log('\nSeed tamamlandı: 3 istifadəçi, 15 maşın, 5 rezervasiya');
-console.log('Admin:  admin@rentcar.az / admin123');
+console.log(`Admin:  ${ADMIN_EMAIL} / ${ADMIN_PASSWORD}`);
 console.log('İstifadəçi: user@rentcar.az / user123');

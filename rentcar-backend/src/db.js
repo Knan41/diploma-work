@@ -69,4 +69,16 @@ if (!userCols.includes('phone')) db.exec('ALTER TABLE users ADD COLUMN phone TEX
 const bookCols = db.prepare('PRAGMA table_info(bookings)').all().map((c) => c.name);
 if (!bookCols.includes('cancelled_by')) db.exec('ALTER TABLE bookings ADD COLUMN cancelled_by TEXT');
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    value TEXT NOT NULL UNIQUE,
+    label TEXT NOT NULL
+  );
+`);
+const insCat = db.prepare('INSERT OR IGNORE INTO categories (value, label) VALUES (?, ?)');
+[['hybrid', 'Hibrid'], ['electric', 'Elektrik'], ['sport', 'Sport']].forEach(([v, l]) => insCat.run(v, l));
+// Köhnə maşınlarda başqa kateqoriya varsa, onu da siyahıya əlavə edir
+db.prepare('SELECT DISTINCT category FROM cars WHERE category IS NOT NULL').all().forEach((r) => insCat.run(r.category, r.category));
+
 module.exports = db;

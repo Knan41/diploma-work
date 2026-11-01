@@ -37,7 +37,7 @@ Başqa üsul: admin paneldən maşını redaktə edib `image` sahəsinə şəkli
 
 | Rol | Email | Parol |
 |---|---|---|
-| Admin | admin@rentcar.az | admin123 |
+| Admin | `.env` faylındakı `ADMIN_EMAIL` | `.env` faylındakı `ADMIN_PASSWORD` |
 | İstifadəçi | user@rentcar.az | user123 |
 | İstifadəçi | leyla@rentcar.az | user123 |
 

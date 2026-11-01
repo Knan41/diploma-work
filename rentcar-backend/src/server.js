@@ -44,6 +44,7 @@ app.use("/api/bookings", require("./routes/bookings"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/stats", require("./routes/stats"));
 app.use("/api/messages", require("./routes/messages"));
+app.use("/api/categories", require("./routes/categories"));
 
 app.use((req, res) =>
   res.status(404).json({ message: "Səhifə tapılmadı" }),
