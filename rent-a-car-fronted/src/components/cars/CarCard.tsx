@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import type { Car } from '../../types';
 import { Fuel, Settings2, Users, ArrowRight } from 'lucide-react';
@@ -7,6 +8,7 @@ interface CarCardProps {
 }
 
 const CarCard = ({ car }: CarCardProps) => {
+  const { t } = useTranslation();
   return (
     <div className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#111111] transition-all duration-300 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5">
       <Link to={`/cars/${car.id}`} className="relative block h-52 overflow-hidden">
@@ -22,7 +24,7 @@ const CarCard = ({ car }: CarCardProps) => {
         {!car.available && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/60">
             <span className="rounded-lg bg-red-500/90 px-4 py-2 text-sm font-bold text-white">
-              Mövcud deyil
+              {t('common.notAvailable')}
             </span>
           </div>
         )}
@@ -37,11 +39,11 @@ const CarCard = ({ car }: CarCardProps) => {
         <div className="mb-4 flex items-center gap-4 border-t border-white/10 pt-4">
           <div className="flex items-center gap-1.5 text-sm text-gray-400">
             <Fuel className="h-4 w-4 text-amber-500" />
-            <span>{car.fuel}</span>
+            <span>{t(`fuel.${car.fuel}`, { defaultValue: car.fuel })}</span>
           </div>
           <div className="flex items-center gap-1.5 text-sm text-gray-400">
             <Settings2 className="h-4 w-4 text-amber-500" />
-            <span>{car.transmission}</span>
+            <span>{t(`transmission.${car.transmission}`, { defaultValue: car.transmission })}</span>
           </div>
           <div className="flex items-center gap-1.5 text-sm text-gray-400">
             <Users className="h-4 w-4 text-amber-500" />
@@ -52,13 +54,13 @@ const CarCard = ({ car }: CarCardProps) => {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-2xl font-bold text-amber-500">₼{car.pricePerDay}</span>
-            <span className="text-sm text-gray-400"> / gün</span>
+            <span className="text-sm text-gray-400"> / {t('common.day')}</span>
           </div>
           <Link
             to={`/cars/${car.id}`}
             className="flex items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
           >
-            Ətraflı
+            {t('card.details')}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

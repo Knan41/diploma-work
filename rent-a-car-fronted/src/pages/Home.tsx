@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetCarsQuery } from '../store/api/carsApi';
@@ -22,6 +23,7 @@ const useCountUp = (end: number, duration: number = 2000, start: boolean = false
 };
 
 const Home = () => {
+  const { t } = useTranslation();
   const { data: cars, isLoading } = useGetCarsQuery({});
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -58,32 +60,31 @@ const Home = () => {
           <div className="max-w-3xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2">
               <Star className="h-4 w-4 text-amber-500" />
-              <span className="text-sm font-medium text-amber-500">Premium Avtomobil Kirayə Xidməti</span>
+              <span className="text-sm font-medium text-amber-500">{t('home.badge')}</span>
             </div>
             <h1 className="mb-6 text-5xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
-              Premium{' '}
+              {t('home.titleA')}{' '}
               <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
-                Avtomobil
+                {t('home.titleB')}
               </span>{' '}
-              Kirayəsi
+              {t('home.titleC')}
             </h1>
             <p className="mb-8 max-w-xl text-lg leading-relaxed text-gray-400">
-              Ən son model lüks və idman avtomobillərini sərfəli qiymətlərlə icarəyə götürün.
-              Rahatlığınız və təhlükəsizliyiniz bizim prioritetimizdir.
+              {t('home.heroText')}
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
                 to="/cars"
                 className="group flex items-center gap-2 rounded-xl bg-amber-500 px-8 py-4 text-base font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
               >
-                Maşınlara Bax
+                {t('home.viewCars')}
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 to="/about"
                 className="flex items-center gap-2 rounded-xl border border-white/20 px-8 py-4 text-base font-semibold text-white transition-all hover:border-white/40 hover:bg-white/5"
               >
-                Haqqımızda
+                {t('nav.about')}
               </Link>
             </div>
           </div>
@@ -95,11 +96,11 @@ const Home = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-amber-500">
-              Kolleksiyamız
+              {t('home.collection')}
             </span>
-            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Seçilmiş Maşınlar</h2>
+            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">{t('home.featured')}</h2>
             <p className="mx-auto max-w-2xl text-gray-400">
-              Ən populyar və yüksək keyfiyyətli avtomobillərimizdən bəzilərini kəşf edin
+              {t('home.featuredText')}
             </p>
           </div>
 
@@ -117,7 +118,7 @@ const Home = () => {
                   to="/cars"
                   className="group inline-flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-8 py-4 font-semibold text-amber-500 transition-all hover:bg-amber-500 hover:text-black"
                 >
-                  Bütün Maşınlara Bax
+                  {t('home.viewAll')}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -131,11 +132,11 @@ const Home = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-amber-500">
-              Üstünlüklərimiz
+              {t('home.advantages')}
             </span>
-            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">Niyə Biz?</h2>
+            <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">{t('home.whyUs')}</h2>
             <p className="mx-auto max-w-2xl text-gray-400">
-              Müştərilərimizə ən yaxşı xidməti təqdim etmək üçün çalışırıq
+              {t('home.whyUsText')}
             </p>
           </div>
 
@@ -143,23 +144,23 @@ const Home = () => {
             {[
               {
                 icon: Shield,
-                title: 'Etibarlı Xidmət',
-                description: 'Tam sığortalı və təhlükəsiz avtomobillər. Yolda hər zaman dəstək.',
+                title: t('home.f1Title'),
+                description: t('home.f1Text'),
               },
               {
                 icon: Clock,
-                title: 'Sürətli Proses',
-                description: 'Onlayn rezervasiya ilə vaxtınıza qənaət edin. 5 dəqiqədə hazır.',
+                title: t('home.f2Title'),
+                description: t('home.f2Text'),
               },
               {
                 icon: ThumbsUp,
-                title: 'Ən Yaxşı Qiymət',
-                description: 'Bazarda ən rəqabətli qiymətlər. Gizli ödənişlər yoxdur.',
+                title: t('home.f3Title'),
+                description: t('home.f3Text'),
               },
               {
                 icon: Headphones,
-                title: '24/7 Dəstək',
-                description: 'Günün istənilən saatında müştəri xidməti ilə əlaqə saxlaya bilərsiniz.',
+                title: t('home.f4Title'),
+                description: t('home.f4Text'),
               },
             ].map((feature, index) => {
               const Icon = feature.icon;
@@ -185,10 +186,10 @@ const Home = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: Car, value: totalCars, suffix: '+', label: 'Avtomobil' },
-              { icon: Users, value: happyClients, suffix: '+', label: 'Məmnun Müştəri' },
-              { icon: CalendarCheck, value: totalBookings, suffix: '+', label: 'Rezervasiya' },
-              { icon: Star, value: rating, suffix: '.0', label: 'Reytinq' },
+              { icon: Car, value: totalCars, suffix: '+', label: t('home.statCars') },
+              { icon: Users, value: happyClients, suffix: '+', label: t('home.statClients') },
+              { icon: CalendarCheck, value: totalBookings, suffix: '+', label: t('home.statBookings') },
+              { icon: Star, value: rating, suffix: '.0', label: t('home.statRating') },
             ].map((stat, index) => {
               const Icon = stat.icon;
               return (
@@ -215,16 +216,16 @@ const Home = () => {
       <section className="bg-[#111111] py-24">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
-            Hazırsınız? İndi Rezerv Edin!
+            {t('home.ctaTitle')}
           </h2>
           <p className="mb-8 text-lg text-gray-400">
-            Xəyal etdiyiniz avtomobili seçin və sərfəli qiymətlərlə kirayə edin
+            {t('home.ctaText')}
           </p>
           <Link
             to="/cars"
             className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-10 py-4 text-lg font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
           >
-            Maşınlara Bax
+            {t('home.viewCars')}
             <ArrowRight className="h-5 w-5" />
           </Link>
         </div>

@@ -1,11 +1,14 @@
+import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { selectCurrentUser, selectIsAuthenticated, selectIsAdmin, logout } from '../../store/slices/authSlice';
 import { Menu, X, ChevronDown, User, CalendarDays, LogOut, Shield, Car } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,15 +50,15 @@ const Navbar = () => {
     dispatch(logout());
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    toast.success('Uğurla çıxış edildi');
+    toast.success(t('nav.logoutSuccess'));
     navigate('/');
   };
 
   const navLinks = [
-    { to: '/', label: 'Əsas Səhifə' },
-    { to: '/cars', label: 'Maşınlar' },
-    { to: '/about', label: 'Haqqımızda' },
-    { to: '/contact', label: 'Əlaqə' },
+    { to: '/', label: t('nav.home') },
+    { to: '/cars', label: t('nav.cars') },
+    { to: '/about', label: t('nav.about') },
+    { to: '/contact', label: t('nav.contact') },
   ];
 
   return (
@@ -93,6 +96,7 @@ const Navbar = () => {
 
         {/* Desktop Auth */}
         <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
           {isAuthenticated && user ? (
             <div className="relative" ref={dropdownRef}>
               <button
@@ -118,14 +122,14 @@ const Navbar = () => {
                       className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                     >
                       <CalendarDays className="h-4 w-4" />
-                      Rezervasiyalarım
+                      {t('nav.myBookings')}
                     </Link>
                     <Link
                       to="/profile"
                       className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
                     >
                       <User className="h-4 w-4" />
-                      Profil
+                      {t('nav.profile')}
                     </Link>
                     {isAdmin && (
                       <Link
@@ -133,7 +137,7 @@ const Navbar = () => {
                         className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-amber-500 transition-colors hover:bg-amber-500/10"
                       >
                         <Shield className="h-4 w-4" />
-                        Admin Panel
+                        {t('nav.adminPanel')}
                       </Link>
                     )}
                   </div>
@@ -143,7 +147,7 @@ const Navbar = () => {
                       className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-400 transition-colors hover:bg-red-500/10"
                     >
                       <LogOut className="h-4 w-4" />
-                      Çıxış
+                      {t('nav.logout')}
                     </button>
                   </div>
                 </div>
@@ -155,13 +159,13 @@ const Navbar = () => {
                 to="/login"
                 className="rounded-lg border border-white/10 px-5 py-2 text-sm font-medium text-white transition-colors hover:border-amber-500/30 hover:bg-white/5"
               >
-                Daxil ol
+                {t('nav.login')}
               </Link>
               <Link
                 to="/register"
                 className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
               >
-                Qeydiyyat
+                {t('nav.register')}
               </Link>
             </>
           )}
@@ -180,6 +184,9 @@ const Navbar = () => {
       {isMobileOpen && (
         <div className="border-t border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl md:hidden">
           <div className="space-y-1 px-4 py-4">
+            <div className="px-4 py-2">
+              <LanguageSwitcher />
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -200,14 +207,14 @@ const Navbar = () => {
                   className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-gray-300 transition-colors hover:bg-white/5"
                 >
                   <CalendarDays className="h-4 w-4" />
-                  Rezervasiyalarım
+                  {t('nav.myBookings')}
                 </Link>
                 <Link
                   to="/profile"
                   className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-gray-300 transition-colors hover:bg-white/5"
                 >
                   <User className="h-4 w-4" />
-                  Profil
+                  {t('nav.profile')}
                 </Link>
                 {isAdmin && (
                   <Link
@@ -215,7 +222,7 @@ const Navbar = () => {
                     className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-amber-500 transition-colors hover:bg-amber-500/10"
                   >
                     <Shield className="h-4 w-4" />
-                    Admin Panel
+                    {t('nav.adminPanel')}
                   </Link>
                 )}
                 <button
@@ -223,7 +230,7 @@ const Navbar = () => {
                   className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm text-red-400 transition-colors hover:bg-red-500/10"
                 >
                   <LogOut className="h-4 w-4" />
-                  Çıxış
+                  {t('nav.logout')}
                 </button>
               </>
             ) : (
@@ -234,13 +241,13 @@ const Navbar = () => {
                     to="/login"
                     className="flex-1 rounded-lg border border-white/10 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-white/5"
                   >
-                    Daxil ol
+                    {t('nav.login')}
                   </Link>
                   <Link
                     to="/register"
                     className="flex-1 rounded-lg bg-amber-500 py-2.5 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
                   >
-                    Qeydiyyat
+                    {t('nav.register')}
                   </Link>
                 </div>
               </>

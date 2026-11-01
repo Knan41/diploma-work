@@ -17,14 +17,8 @@ import AdminBookings from './pages/admin/AdminBookings';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminMessages from './pages/admin/AdminMessages';
 import NotFound from './pages/NotFound';
-import { useTranslation } from 'react-i18next';
 
 function App() {
-  const {t,i18n} = useTranslation()
-
-  const  changeLang =(lang)=> {
-    i18n.changeLanguage(lang)
-  }
   return (
     <Routes>
       {/* Public Routes */}
