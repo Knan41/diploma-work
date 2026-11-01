@@ -66,4 +66,7 @@ if (!carCols.includes('acceleration')) db.exec('ALTER TABLE cars ADD COLUMN acce
 const userCols = db.prepare('PRAGMA table_info(users)').all().map((c) => c.name);
 if (!userCols.includes('phone')) db.exec('ALTER TABLE users ADD COLUMN phone TEXT');
 
+const bookCols = db.prepare('PRAGMA table_info(bookings)').all().map((c) => c.name);
+if (!bookCols.includes('cancelled_by')) db.exec('ALTER TABLE bookings ADD COLUMN cancelled_by TEXT');
+
 module.exports = db;

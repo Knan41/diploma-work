@@ -20,6 +20,7 @@ const toBooking = (r) => ({
   endDate: r.end_date,
   totalPrice: r.total_price,
   status: r.status,
+  cancelledBy: r.cancelled_by,
   createdAt: r.created_at,
   car: { id: r.car_id, brand: r.brand, model: r.model, image: r.image, pricePerDay: r.price_per_day },
   user: { id: r.user_id, name: r.user_name, email: r.user_email },
@@ -74,7 +75,7 @@ router.patch('/:id/cancel', authRequired, (req, res) => {
     return res.status(404).json({ message: 'Rezervasiya tapılmadı' });
   if (row.status !== 'pending')
     return res.status(400).json({ message: 'Yalnız gözləyən rezervasiyanı ləğv etmək olar' });
-  db.prepare("UPDATE bookings SET status = 'cancelled' WHERE id = ?").run(row.id);
+  db.prepare("UPDATE bookings SET status = 'cancelled', cancelled_by = 'user' WHERE id = ?").run(row.id);
   res.json(toBooking(db.prepare(BASE + ' WHERE b.id = ?').get(row.id)));
 });
 
@@ -92,8 +93,13 @@ router.patch('/:id/status', authRequired, adminOnly, (req, res) => {
   const { status } = req.body || {};
   if (!['pending', 'approved', 'cancelled'].includes(status))
     return res.status(400).json({ message: 'status: pending, approved və ya cancelled olmalıdır' });
-  const row = db.prepare('SELECT id FROM bookings WHERE id = ?').get(req.params.id);
+  const row = db.prepare('SELECT id, status, cancelled_by FROM bookings WHERE id = ?').get(req.params.id);
   if (!row) return res.status(404).json({ message: 'Rezervasiya tapılmadı' });
+  // İstifadəçi özü ləğv edibsə, admin bərpa edə bilməz
+  if (row.status === 'cancelled' && row.cancelled_by === 'user' && status !== 'cancelled')
+    return res.status(403).json({ message: 'İstifadəçinin ləğv etdiyi rezervasiyanı bərpa etmək olmaz' });
+  if (status === 'cancelled' && row.status !== 'cancelled')
+    db.prepare("UPDATE bookings SET cancelled_by = 'admin' WHERE id = ?").run(row.id);
   db.prepare('UPDATE bookings SET status = ? WHERE id = ?').run(status, row.id);
   res.json(toBooking(db.prepare(BASE + ' WHERE b.id = ?').get(row.id)));
 });

@@ -40,6 +40,8 @@ const AdminBookings = () => {
             <td className="p-2">
               <select
                 className="input"
+                disabled={b.status === 'cancelled' && b.cancelledBy === 'user'}
+                title={b.status === 'cancelled' && b.cancelledBy === 'user' ? 'İstifadəçi ləğv edib, bərpa etmək olmaz' : undefined}
                 value={b.status}
                 onChange={(e) => changeStatus(b.id, e.target.value as Booking['status'])}
               >
@@ -47,6 +49,9 @@ const AdminBookings = () => {
                 <option value="approved">Təsdiqlənib</option>
                 <option value="cancelled">Ləğv edilib</option>
               </select>
+              {b.status === 'cancelled' && b.cancelledBy === 'user' && (
+                <span className="ml-2 text-xs text-gray-500">İstifadəçi ləğv edib</span>
+              )}
             </td>
           </tr>
         ))}
