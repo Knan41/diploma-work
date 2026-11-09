@@ -107,8 +107,7 @@
     "book": "Book now",
     "booked": "Booking request sent",
     "total": "Total",
-    "bookedDates": "Booked dates:",
-    "adminCannotBook": "You cannot rent a car with an admin account."
+    "bookedDates": "Booked dates:"
   },
   "contact": {
     "namePh": "Your name",

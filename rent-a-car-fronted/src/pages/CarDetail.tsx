@@ -65,11 +65,7 @@ const CarDetail = () => {
 
         <p className="mb-6 text-2xl font-bold text-amber-500">₼{car.pricePerDay} / {t('common.day')}</p>
 
-        {isAdmin ? (
-          <div className="card">
-            <p className="text-gray-300">{t('carDetail.adminCannotBook')}</p>
-          </div>
-        ) : (
+        {!isAdmin && (
         <div className="card space-y-3">
           <h2 className="text-lg font-semibold">{t('carDetail.book')}</h2>
           <input type="date" className="input w-full" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
