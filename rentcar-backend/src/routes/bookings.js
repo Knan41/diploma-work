@@ -32,6 +32,8 @@ const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000)
 
 // POST /api/bookings   { carId, startDate, endDate }  (tarix formatı: YYYY-MM-DD)
 router.post('/', authRequired, (req, res) => {
+  if (req.user.role === 'admin')
+    return res.status(403).json({ message: 'Admin maşın icarəyə götürə bilməz' });
   const { carId, startDate, endDate } = req.body || {};
   if (!carId || !dateRe.test(startDate || '') || !dateRe.test(endDate || ''))
     return res.status(400).json({ message: 'carId, startDate və endDate (YYYY-MM-DD) lazımdır' });

@@ -107,7 +107,8 @@
     "book": "Rezerv et",
     "booked": "Rezervasiya göndərildi",
     "total": "Cəmi",
-    "bookedDates": "Tutulmuş tarixlər:"
+    "bookedDates": "Tutulmuş tarixlər:",
+    "adminCannotBook": "Admin hesabı ilə maşın icarəyə götürmək olmaz."
   },
   "contact": {
     "namePh": "Adınız",
@@ -255,6 +256,7 @@
     "yearInvalid": "İl düzgün deyil",
     "hpInvalid": "At gücü düzgün deyil",
     "accelInvalid": "Sürətlənmə düzgün deyil",
-    "noSuchCategory": "Belə kateqoriya yoxdur"
+    "noSuchCategory": "Belə kateqoriya yoxdur",
+    "adminCannotBook": "Admin maşın icarəyə götürə bilməz"
   }
 }

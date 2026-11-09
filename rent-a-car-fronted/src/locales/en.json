@@ -107,7 +107,8 @@
     "book": "Book now",
     "booked": "Booking request sent",
     "total": "Total",
-    "bookedDates": "Booked dates:"
+    "bookedDates": "Booked dates:",
+    "adminCannotBook": "You cannot rent a car with an admin account."
   },
   "contact": {
     "namePh": "Your name",
@@ -255,6 +256,7 @@
     "yearInvalid": "Year is not valid",
     "hpInvalid": "Horsepower is not valid",
     "accelInvalid": "Acceleration is not valid",
-    "noSuchCategory": "No such category"
+    "noSuchCategory": "No such category",
+    "adminCannotBook": "Admins cannot rent a car"
   }
 }

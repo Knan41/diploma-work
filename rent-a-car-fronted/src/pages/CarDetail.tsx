@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useGetCarQuery, useGetBookedDatesQuery } from '../store/api/carsApi';
 import { useCreateBookingMutation } from '../store/api/bookingsApi';
 import { useAppSelector } from '../store/hooks';
-import { selectIsAuthenticated } from '../store/slices/authSlice';
+import { selectIsAuthenticated, selectCurrentUser } from '../store/slices/authSlice';
 import Loading from '../components/ui/Loading';
 import { errorMessage } from '../utils/errorMessage';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ const CarDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const isAdmin = useAppSelector(selectCurrentUser)?.role === 'admin';
 
   const { data: car, isLoading } = useGetCarQuery(id!);
   const { data: booked = [] } = useGetBookedDatesQuery(id!);
@@ -64,6 +65,11 @@ const CarDetail = () => {
 
         <p className="mb-6 text-2xl font-bold text-amber-500">₼{car.pricePerDay} / {t('common.day')}</p>
 
+        {isAdmin ? (
+          <div className="card">
+            <p className="text-gray-300">{t('carDetail.adminCannotBook')}</p>
+          </div>
+        ) : (
         <div className="card space-y-3">
           <h2 className="text-lg font-semibold">{t('carDetail.book')}</h2>
           <input type="date" className="input w-full" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
@@ -88,6 +94,7 @@ const CarDetail = () => {
             </div>
           )}
         </div>
+        )}
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ const SERVER_MESSAGES: Record<string, string> = {
   'Bu maşın hazırda mövcud deyil': 'server.carUnavailable',
   'Bu maşın seçilmiş tarixlərdə artıq götürülüb': 'server.carBooked',
   'Bu əməliyyat yalnız admin üçündür': 'server.adminOnly',
+  'Admin maşın icarəyə götürə bilməz': 'server.adminCannotBook',
   'Email düzgün deyil': 'server.emailInvalid',
   'Email və parol daxil edin': 'server.emailPasswordRequired',
   'Email və ya parol yanlışdır': 'server.wrongCredentials',
