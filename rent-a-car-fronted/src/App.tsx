@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import AdminLayout from './components/layout/AdminLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -31,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/not-found" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
 
         {/* Protected User Routes */}
         <Route element={<ProtectedRoute />}>
@@ -49,9 +50,6 @@ function App() {
           <Route path="/admin/messages" element={<AdminMessages />} />
         </Route>
       </Route>
-
-      {/* Catch all */}
-      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

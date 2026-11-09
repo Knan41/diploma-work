@@ -15,7 +15,12 @@ if (isEmpty) {
 
 const app = express();
 app.set("trust proxy", 1);
-app.use(cors());
+// CLIENT_URL (məs. https://sayt.vercel.app) verilibsə yalnız həmin ünvana icazə verilir; verilməyibsə hamıya açıqdır
+const clientOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((s) => s.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
+app.use(cors(clientOrigins.length ? { origin: clientOrigins } : undefined));
 app.use(express.json({ limit: "8mb" }));
 
 // Şəkillər public/images qovluğundan verilir

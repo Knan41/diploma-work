@@ -125,7 +125,8 @@
     "registerSuccess": "Registration successful",
     "phonePh": "Phone number (+994 50 123 45 67)",
     "passwordMinPh": "Password (at least 6 characters)",
-    "signUpBtn": "Create account"
+    "signUpBtn": "Create account",
+    "sessionExpired": "Your session has expired, please log in again"
   },
   "myBookings": {
     "empty": "You have no bookings yet.",

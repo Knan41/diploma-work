@@ -125,7 +125,8 @@
     "registerSuccess": "Qeydiyyat uğurludur",
     "phonePh": "Əlaqə nömrəsi (+994 50 123 45 67)",
     "passwordMinPh": "Parol (ən azı 6 simvol)",
-    "signUpBtn": "Qeydiyyatdan keç"
+    "signUpBtn": "Qeydiyyatdan keç",
+    "sessionExpired": "Sessiyanın müddəti bitib, yenidən daxil olun"
   },
   "myBookings": {
     "empty": "Hələ rezervasiyanız yoxdur.",
