@@ -107,7 +107,10 @@
     "book": "Book now",
     "booked": "Booking request sent",
     "total": "Total",
-    "bookedDates": "Booked dates:"
+    "bookedDates": "Booked dates:",
+    "editTitle": "Edit car information",
+    "description": "Description",
+    "saved": "Changes saved"
   },
   "contact": {
     "namePh": "Your name",

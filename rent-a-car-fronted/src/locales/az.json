@@ -107,7 +107,10 @@
     "book": "Rezerv et",
     "booked": "Rezervasiya göndərildi",
     "total": "Cəmi",
-    "bookedDates": "Tutulmuş tarixlər:"
+    "bookedDates": "Tutulmuş tarixlər:",
+    "editTitle": "Maşın məlumatlarını dəyiş",
+    "description": "Təsvir",
+    "saved": "Məlumatlar yadda saxlandı"
   },
   "contact": {
     "namePh": "Adınız",

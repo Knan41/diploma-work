@@ -6,6 +6,7 @@ import { useCreateBookingMutation } from '../store/api/bookingsApi';
 import { useAppSelector } from '../store/hooks';
 import { selectIsAuthenticated, selectCurrentUser } from '../store/slices/authSlice';
 import Loading from '../components/ui/Loading';
+import CarEditForm from '../components/cars/CarEditForm';
 import { errorMessage } from '../utils/errorMessage';
 import { useTranslation } from 'react-i18next';
 
@@ -64,6 +65,8 @@ const CarDetail = () => {
         </ul>
 
         <p className="mb-6 text-2xl font-bold text-amber-500">₼{car.pricePerDay} / {t('common.day')}</p>
+
+        {isAdmin && <CarEditForm key={car.id} car={car} />}
 
         {!isAdmin && (
         <div className="card space-y-3">
