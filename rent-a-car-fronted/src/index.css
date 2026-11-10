@@ -40,7 +40,7 @@ body {
 
 /* Selection styling */
 ::selection {
-  background-color: rgba(245, 158, 11, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   color: #fff;
 }
 
@@ -71,8 +71,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.2); }
 }
 
 .animate-fade-in {
@@ -96,7 +96,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #ffffff, #d4d4d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -104,10 +104,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* Sadə ortaq siniflər */
 .input {
-  @apply rounded-lg border border-white/10 bg-[#1a1a1a] px-4 py-2 text-white outline-none focus:border-amber-500;
+  @apply rounded-lg border border-white/10 bg-[#1a1a1a] px-4 py-2 text-white outline-none focus:border-white;
 }
 .btn {
-  @apply rounded-lg bg-amber-500 px-5 py-2 font-semibold text-black hover:bg-amber-400 disabled:opacity-50;
+  @apply rounded-lg bg-white px-5 py-2 font-semibold text-black hover:bg-gray-200 disabled:opacity-50;
 }
 .btn-danger {
   @apply rounded-lg bg-red-500/10 px-4 py-2 text-sm text-red-400 hover:bg-red-500/20;

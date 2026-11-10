@@ -18,7 +18,7 @@ const LanguageSwitcher = () => {
           onClick={() => i18n.changeLanguage(lng)}
           aria-pressed={current === lng}
           className={`px-3 py-1.5 text-xs font-semibold uppercase transition-colors ${
-            current === lng ? 'bg-amber-500 text-black' : 'text-gray-300 hover:bg-white/10 hover:text-white'
+            current === lng ? 'bg-white text-black' : 'text-gray-300 hover:bg-white/10 hover:text-white'
           }`}
         >
           {lng}

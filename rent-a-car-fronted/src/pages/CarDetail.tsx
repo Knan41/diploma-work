@@ -64,7 +64,7 @@ const CarDetail = () => {
           <li>{t('carDetail.seats')}: {car.seats}</li>
         </ul>
 
-        <p className="mb-6 text-2xl font-bold text-amber-500">₼{car.pricePerDay} / {t('common.day')}</p>
+        <p className="mb-6 text-2xl font-bold text-white">₼{car.pricePerDay} / {t('common.day')}</p>
 
         {isAdmin && <CarEditForm key={car.id} car={car} />}
 

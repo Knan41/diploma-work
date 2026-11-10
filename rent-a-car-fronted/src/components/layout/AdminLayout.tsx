@@ -65,9 +65,9 @@ const AdminLayout = () => {
         {/* Sidebar Header */}
         <div className="flex h-16 items-center justify-between border-b border-white/10 px-6">
           <Link to="/" className="flex items-center gap-2">
-            <Car className="h-6 w-6 text-amber-500" />
+            <Car className="h-6 w-6 text-white" />
             <span className="text-lg font-bold text-white">
-              RENT<span className="text-amber-500">CAR</span>
+              RENT<span className="text-white">CAR</span>
             </span>
           </Link>
           <button
@@ -89,7 +89,7 @@ const AdminLayout = () => {
                 onClick={() => setIsSidebarOpen(false)}
                 className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                   isActive(link.to)
-                    ? 'bg-amber-500/10 text-amber-500'
+                    ? 'bg-white/10 text-white'
                     : 'text-gray-400 hover:bg-white/5 hover:text-white'
                 }`}
               >
@@ -132,7 +132,7 @@ const AdminLayout = () => {
           <h1 className="text-lg font-semibold text-white lg:text-xl">{t('nav.adminPanel')}</h1>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-black">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-bold text-black">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
             <span className="hidden text-sm font-medium text-white sm:inline">{user?.name}</span>

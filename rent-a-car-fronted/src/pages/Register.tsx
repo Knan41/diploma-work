@@ -39,7 +39,7 @@ const Register = () => {
         <input type="password" className="input w-full" placeholder={t('auth.passwordMinPh')} value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button className="btn w-full" disabled={isLoading}>{t('auth.signUpBtn')}</button>
         <p className="text-sm text-gray-400">
-          {t('auth.haveAccount')} <Link to="/login" className="text-amber-500">{t('nav.login')}</Link>
+          {t('auth.haveAccount')} <Link to="/login" className="text-white">{t('nav.login')}</Link>
         </p>
       </form>
     </div>

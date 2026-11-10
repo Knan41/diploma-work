@@ -12,9 +12,9 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <Link to="/" className="mb-4 flex items-center gap-2">
-              <Car className="h-8 w-8 text-amber-500" />
+              <Car className="h-8 w-8 text-white" />
               <span className="text-2xl font-bold tracking-tight text-white">
-                RENT<span className="text-amber-500">CAR</span>
+                RENT<span className="text-white">CAR</span>
               </span>
             </Link>
             <p className="mb-6 text-sm leading-relaxed text-gray-400">
@@ -23,25 +23,25 @@ const Footer = () => {
             <div className="flex items-center gap-3">
               <Link
                 to="/not-found"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-white/30 hover:bg-white/10 hover:text-white"
               >
                 <Facebook className="h-4 w-4" />
               </Link>
               <Link
                 to="/not-found"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-white/30 hover:bg-white/10 hover:text-white"
               >
                 <Instagram className="h-4 w-4" />
               </Link>
               <Link
                 to="/not-found"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-white/30 hover:bg-white/10 hover:text-white"
               >
                 <Twitter className="h-4 w-4" />
               </Link>
               <Link
                 to="/not-found"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-500"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-gray-400 transition-all hover:border-white/30 hover:bg-white/10 hover:text-white"
               >
                 <Youtube className="h-4 w-4" />
               </Link>
@@ -61,7 +61,7 @@ const Footer = () => {
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="text-sm text-gray-400 transition-colors hover:text-amber-500"
+                    className="text-sm text-gray-400 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -93,20 +93,20 @@ const Footer = () => {
             <h3 className="mb-4 text-lg font-semibold text-white">{t('nav.contact')}</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-white" />
                 <span className="text-sm text-gray-400">
                   {t('footer.address')}
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="h-5 w-5 shrink-0 text-amber-500" />
-                <a href="tel:+994501234567" className="text-sm text-gray-400 transition-colors hover:text-amber-500">
+                <Phone className="h-5 w-5 shrink-0 text-white" />
+                <a href="tel:+994501234567" className="text-sm text-gray-400 transition-colors hover:text-white">
                   +994 50 123 45 67
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="h-5 w-5 shrink-0 text-amber-500" />
-                <a href="mailto:info@rentcar.az" className="text-sm text-gray-400 transition-colors hover:text-amber-500">
+                <Mail className="h-5 w-5 shrink-0 text-white" />
+                <a href="mailto:info@rentcar.az" className="text-sm text-gray-400 transition-colors hover:text-white">
                   info@rentcar.az
                 </a>
               </li>

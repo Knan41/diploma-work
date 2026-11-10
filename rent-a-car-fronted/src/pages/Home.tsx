@@ -58,13 +58,13 @@ const Home = () => {
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-32 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2">
-              <Star className="h-4 w-4 text-amber-500" />
-              <span className="text-sm font-medium text-amber-500">{t('home.badge')}</span>
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2">
+              <Star className="h-4 w-4 text-white" />
+              <span className="text-sm font-medium text-white">{t('home.badge')}</span>
             </div>
             <h1 className="mb-6 text-5xl font-bold leading-tight text-white sm:text-6xl lg:text-7xl">
               {t('home.titleA')}{' '}
-              <span className="bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 {t('home.titleB')}
               </span>{' '}
               {t('home.titleC')}
@@ -75,7 +75,7 @@ const Home = () => {
             <div className="flex flex-wrap gap-4">
               <Link
                 to="/cars"
-                className="group flex items-center gap-2 rounded-xl bg-amber-500 px-8 py-4 text-base font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
+                className="group flex items-center gap-2 rounded-xl bg-white px-8 py-4 text-base font-semibold text-black transition-all hover:bg-gray-200 hover:shadow-lg hover:shadow-white/10"
               >
                 {t('home.viewCars')}
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -95,7 +95,7 @@ const Home = () => {
       <section className="bg-[#0a0a0a] py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-amber-500">
+            <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-white">
               {t('home.collection')}
             </span>
             <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">{t('home.featured')}</h2>
@@ -116,7 +116,7 @@ const Home = () => {
               <div className="mt-12 text-center">
                 <Link
                   to="/cars"
-                  className="group inline-flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-8 py-4 font-semibold text-amber-500 transition-all hover:bg-amber-500 hover:text-black"
+                  className="group inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-8 py-4 font-semibold text-white transition-all hover:bg-white hover:text-black"
                 >
                   {t('home.viewAll')}
                   <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -131,7 +131,7 @@ const Home = () => {
       <section className="bg-[#111111] py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-amber-500">
+            <span className="mb-2 inline-block text-sm font-semibold uppercase tracking-widest text-white">
               {t('home.advantages')}
             </span>
             <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">{t('home.whyUs')}</h2>
@@ -167,9 +167,9 @@ const Home = () => {
               return (
                 <div
                   key={index}
-                  className="group rounded-xl border border-white/10 bg-[#1a1a1a] p-8 transition-all duration-300 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5"
+                  className="group rounded-xl border border-white/10 bg-[#1a1a1a] p-8 transition-all duration-300 hover:border-white/30 hover:shadow-lg hover:shadow-white/5"
                 >
-                  <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-amber-500/10 text-amber-500 transition-colors group-hover:bg-amber-500 group-hover:text-black">
+                  <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-white/10 text-white transition-colors group-hover:bg-white group-hover:text-black">
                     <Icon className="h-7 w-7" />
                   </div>
                   <h3 className="mb-3 text-lg font-semibold text-white">{feature.title}</h3>
@@ -197,8 +197,8 @@ const Home = () => {
                   key={index}
                   className="rounded-xl border border-white/10 bg-[#111111] p-8 text-center"
                 >
-                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-500/10">
-                    <Icon className="h-7 w-7 text-amber-500" />
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
+                    <Icon className="h-7 w-7 text-white" />
                   </div>
                   <div className="mb-1 text-4xl font-bold text-white">
                     {stat.value}
@@ -223,7 +223,7 @@ const Home = () => {
           </p>
           <Link
             to="/cars"
-            className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-10 py-4 text-lg font-semibold text-black transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
+            className="inline-flex items-center gap-2 rounded-xl bg-white px-10 py-4 text-lg font-semibold text-black transition-all hover:bg-gray-200 hover:shadow-lg hover:shadow-white/10"
           >
             {t('home.viewCars')}
             <ArrowRight className="h-5 w-5" />

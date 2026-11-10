@@ -155,7 +155,7 @@ const AdminCars = () => {
         <h2 className="text-lg font-semibold text-white">{t('adminCars.addCar')}</h2>
 
         {/* Şəkil */}
-        <div className="flex flex-col gap-3 rounded-lg border border-dashed border-amber-500/40 p-4 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3 rounded-lg border border-dashed border-white/40 p-4 sm:flex-row sm:items-center">
           <div className="flex h-28 w-44 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/5 text-xs text-gray-500">
             {image ? <img src={image} alt={t('adminCars.preview')} className="h-full w-full object-cover" /> : t('adminCars.noImage')}
           </div>
@@ -166,7 +166,7 @@ const AdminCars = () => {
               type="file"
               accept="image/png,image/jpeg,image/webp"
               onChange={pickImage}
-              className="block text-sm text-gray-300 file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-amber-500 file:px-4 file:py-2 file:font-semibold file:text-black hover:file:bg-amber-400"
+              className="block text-sm text-gray-300 file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white file:px-4 file:py-2 file:font-semibold file:text-black hover:file:bg-gray-200"
             />
             <p className="text-xs text-gray-500">{t('adminCars.imageHint')}</p>
           </div>
@@ -269,12 +269,12 @@ const AdminCars = () => {
               <td className="p-2">{car.year}</td>
               <td className="p-2">₼{car.pricePerDay}</td>
               <td className="p-2">
-                <button className="text-amber-500" onClick={() => toggleAvailable(car.id, car.available)}>
+                <button className="text-white" onClick={() => toggleAvailable(car.id, car.available)}>
                   {car.available ? t('adminCars.yes') : t('adminCars.no')}
                 </button>
               </td>
               <td className="p-2 text-right">
-                <label className="mr-3 cursor-pointer text-amber-500 hover:underline">
+                <label className="mr-3 cursor-pointer text-white hover:underline">
                   {t('adminCars.changeImage')}
                   <input
                     type="file"

@@ -73,9 +73,9 @@ const Navbar = () => {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <Car className="h-8 w-8 text-amber-500" />
+          <Car className="h-8 w-8 text-white" />
           <span className="text-2xl font-bold tracking-tight text-white">
-            RENT<span className="text-amber-500">CAR</span>
+            RENT<span className="text-white">CAR</span>
           </span>
         </Link>
 
@@ -85,8 +85,8 @@ const Navbar = () => {
             <Link
               key={link.to}
               to={link.to}
-              className={`text-sm font-medium transition-colors hover:text-amber-500 ${
-                location.pathname === link.to ? 'text-amber-500' : 'text-gray-300'
+              className={`text-sm font-medium transition-colors hover:text-white ${
+                location.pathname === link.to ? 'text-white' : 'text-gray-300'
               }`}
             >
               {link.label}
@@ -101,9 +101,9 @@ const Navbar = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:border-amber-500/30 hover:bg-white/10"
+                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:border-white/30 hover:bg-white/10"
               >
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-black">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-black">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
                 <span>{user.name}</span>
@@ -134,7 +134,7 @@ const Navbar = () => {
                     {isAdmin && (
                       <Link
                         to="/admin"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-amber-500 transition-colors hover:bg-amber-500/10"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
                       >
                         <Shield className="h-4 w-4" />
                         {t('nav.adminPanel')}
@@ -157,13 +157,13 @@ const Navbar = () => {
             <>
               <Link
                 to="/login"
-                className="rounded-lg border border-white/10 px-5 py-2 text-sm font-medium text-white transition-colors hover:border-amber-500/30 hover:bg-white/5"
+                className="rounded-lg border border-white/10 px-5 py-2 text-sm font-medium text-white transition-colors hover:border-white/30 hover:bg-white/5"
               >
                 {t('nav.login')}
               </Link>
               <Link
                 to="/register"
-                className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+                className="rounded-lg bg-white px-5 py-2 text-sm font-semibold text-black transition-colors hover:bg-gray-200"
               >
                 {t('nav.register')}
               </Link>
@@ -192,7 +192,7 @@ const Navbar = () => {
                 key={link.to}
                 to={link.to}
                 className={`block rounded-lg px-4 py-3 text-sm font-medium transition-colors hover:bg-white/5 ${
-                  location.pathname === link.to ? 'text-amber-500' : 'text-gray-300'
+                  location.pathname === link.to ? 'text-white' : 'text-gray-300'
                 }`}
               >
                 {link.label}
@@ -219,7 +219,7 @@ const Navbar = () => {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-amber-500 transition-colors hover:bg-amber-500/10"
+                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm text-white transition-colors hover:bg-white/10"
                   >
                     <Shield className="h-4 w-4" />
                     {t('nav.adminPanel')}
@@ -245,7 +245,7 @@ const Navbar = () => {
                   </Link>
                   <Link
                     to="/register"
-                    className="flex-1 rounded-lg bg-amber-500 py-2.5 text-center text-sm font-semibold text-black transition-colors hover:bg-amber-400"
+                    className="flex-1 rounded-lg bg-white py-2.5 text-center text-sm font-semibold text-black transition-colors hover:bg-gray-200"
                   >
                     {t('nav.register')}
                   </Link>

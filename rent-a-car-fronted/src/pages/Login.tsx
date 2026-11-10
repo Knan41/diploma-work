@@ -35,7 +35,7 @@ const Login = () => {
         <input type="password" className="input w-full" placeholder={t('common.password')} value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button className="btn w-full" disabled={isLoading}>{t('nav.login')}</button>
         <p className="text-sm text-gray-400">
-          {t('auth.noAccount')} <Link to="/register" className="text-amber-500">{t('nav.register')}</Link>
+          {t('auth.noAccount')} <Link to="/register" className="text-white">{t('nav.register')}</Link>
         </p>
       </form>
     </div>

@@ -52,7 +52,7 @@ const AdminUsers = () => {
             <td className="p-2">{u.email}</td>
             <td className="p-2">{u.phone || '—'}</td>
             <td className="p-2">
-              <button className="text-amber-500" onClick={() => toggleRole(u.id, u.role)}>{u.role}</button>
+              <button className="text-white" onClick={() => toggleRole(u.id, u.role)}>{u.role}</button>
             </td>
             <td className="p-2 text-right">
               {u.id === me?.id ? (
