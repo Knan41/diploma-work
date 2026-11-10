@@ -12,6 +12,7 @@ export interface Car {
   categoryLabel?: string;
   image: string;
   description: string;
+  descriptionEn?: string | null;
   engine: string;
   horsepower: number;
   acceleration: number;
@@ -29,6 +30,7 @@ export interface CreateCarRequest {
   category?: string;
   image?: string;
   description?: string;
+  descriptionEn?: string;
   engine?: string;
   horsepower?: number;
   acceleration?: number;

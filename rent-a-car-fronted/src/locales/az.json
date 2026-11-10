@@ -110,7 +110,8 @@
     "bookedDates": "Tutulmuş tarixlər:",
     "editTitle": "Maşın məlumatlarını dəyiş",
     "description": "Təsvir",
-    "saved": "Məlumatlar yadda saxlandı"
+    "saved": "Məlumatlar yadda saxlandı",
+    "descriptionEn": "Təsvir (ingilis dilində)"
   },
   "contact": {
     "namePh": "Adınız",
@@ -261,5 +262,10 @@
     "accelInvalid": "Sürətlənmə düzgün deyil",
     "noSuchCategory": "Belə kateqoriya yoxdur",
     "adminCannotBook": "Admin maşın icarəyə götürə bilməz"
+  },
+  "categories": {
+    "hybrid": "Hibrid",
+    "electric": "Elektrik",
+    "sport": "Sport"
   }
 }

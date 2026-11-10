@@ -35,6 +35,7 @@ const toCar = (r, labels = categoryLabels()) => ({
   categoryLabel: labels[r.category] || r.category,
   image: r.image,
   description: r.description,
+  descriptionEn: r.description_en,
   engine: r.engine,
   horsepower: r.horsepower,
   acceleration: r.acceleration,
@@ -117,8 +118,8 @@ router.post('/', authRequired, adminOnly, (req, res) => {
   if (!b.image) return res.status(400).json({ message: 'Maşının şəkli mütləqdir' });
   const info = db
     .prepare(
-      `INSERT INTO cars (brand, model, year, price_per_day, fuel, transmission, seats, category, image, description, engine, horsepower, acceleration, available)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO cars (brand, model, year, price_per_day, fuel, transmission, seats, category, image, description, engine, horsepower, acceleration, available, description_en)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .run(
       b.brand.trim(), b.model.trim(), Number(b.year), Number(b.pricePerDay),
@@ -126,7 +127,8 @@ router.post('/', authRequired, adminOnly, (req, res) => {
       b.category || 'hybrid', saveImage(b.image), b.description || null,
       b.engine || null, b.horsepower ? Number(b.horsepower) : null,
       b.acceleration ? Number(b.acceleration) : null,
-      b.available === false ? 0 : 1
+      b.available === false ? 0 : 1,
+      b.descriptionEn || null
     );
   const row = db.prepare('SELECT * FROM cars WHERE id = ?').get(info.lastInsertRowid);
   res.status(201).json(toCar(row));
@@ -142,7 +144,7 @@ router.put('/:id', authRequired, adminOnly, (req, res) => {
   const b = req.body;
   db.prepare(
     `UPDATE cars SET brand=?, model=?, year=?, price_per_day=?, fuel=?, transmission=?,
-     seats=?, category=?, image=?, description=?, engine=?, horsepower=?, acceleration=?, available=? WHERE id=?`
+     seats=?, category=?, image=?, description=?, engine=?, horsepower=?, acceleration=?, available=?, description_en=? WHERE id=?`
   ).run(
     b.brand ?? row.brand, b.model ?? row.model, Number(b.year ?? row.year),
     Number(b.pricePerDay ?? row.price_per_day), b.fuel ?? row.fuel,
@@ -150,7 +152,8 @@ router.put('/:id', authRequired, adminOnly, (req, res) => {
     b.category ?? row.category, b.image ? saveImage(b.image) : row.image, b.description ?? row.description,
     b.engine ?? row.engine, b.horsepower === undefined ? row.horsepower : (Number(b.horsepower) || null),
     b.acceleration === undefined ? row.acceleration : (Number(b.acceleration) || null),
-    b.available === undefined ? row.available : b.available ? 1 : 0, row.id
+    b.available === undefined ? row.available : b.available ? 1 : 0,
+    b.descriptionEn ?? row.description_en, row.id
   );
   res.json(toCar(db.prepare('SELECT * FROM cars WHERE id = ?').get(row.id)));
 });

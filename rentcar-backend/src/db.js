@@ -62,6 +62,14 @@ const carCols = db.prepare('PRAGMA table_info(cars)').all().map((c) => c.name);
 if (!carCols.includes('engine')) db.exec('ALTER TABLE cars ADD COLUMN engine TEXT');
 if (!carCols.includes('horsepower')) db.exec('ALTER TABLE cars ADD COLUMN horsepower INTEGER');
 if (!carCols.includes('acceleration')) db.exec('ALTER TABLE cars ADD COLUMN acceleration REAL');
+if (!carCols.includes('description_en')) db.exec('ALTER TABLE cars ADD COLUMN description_en TEXT');
+
+// Mövcud maşınlar üçün ingilis təsvir boşdursa, bilinən seed təsvirlərini doldurur
+{
+  const { descriptionsEn } = require('./carTexts');
+  const fill = db.prepare("UPDATE cars SET description_en = ? WHERE description = ? AND (description_en IS NULL OR description_en = '')");
+  Object.entries(descriptionsEn).forEach(([az, en]) => fill.run(en, az));
+}
 
 const userCols = db.prepare('PRAGMA table_info(users)').all().map((c) => c.name);
 if (!userCols.includes('phone')) db.exec('ALTER TABLE users ADD COLUMN phone TEXT');

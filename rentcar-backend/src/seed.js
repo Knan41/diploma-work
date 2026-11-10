@@ -5,6 +5,7 @@ const db = require("./db");
 const fs = require("fs");
 const path = require("path");
 const { carSvg } = require("./carArt");
+const { descriptionsEn } = require("./carTexts");
 
 const imgDir = path.join(__dirname, "..", "public", "images");
 fs.mkdirSync(imgDir, { recursive: true });
@@ -314,8 +315,8 @@ insUser.run(
 );
 
 const insCar = db.prepare(
-  `INSERT INTO cars (brand, model, year, price_per_day, fuel, transmission, seats, category, image, description, engine, horsepower, acceleration, available)
-   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+  `INSERT INTO cars (brand, model, year, price_per_day, fuel, transmission, seats, category, image, description, engine, horsepower, acceleration, available, description_en)
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 );
 cars.forEach((c, i) =>
   insCar.run(
@@ -333,6 +334,7 @@ cars.forEach((c, i) =>
     c[11],
     c[12],
     c[8],
+    descriptionsEn[c[9]] || null,
   ),
 );
 

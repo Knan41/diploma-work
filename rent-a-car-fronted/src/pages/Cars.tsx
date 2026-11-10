@@ -35,7 +35,7 @@ const Cars = () => {
         <select className="input" value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="">{t('cars.allCategories')}</option>
           {categories.map((c) => (
-            <option key={c.value} value={c.value}>{c.label}</option>
+            <option key={c.value} value={c.value}>{t(`categories.${c.value}`, { defaultValue: c.label })}</option>
           ))}
         </select>
       </div>

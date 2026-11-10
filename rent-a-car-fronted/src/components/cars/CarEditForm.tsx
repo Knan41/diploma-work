@@ -34,6 +34,7 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
   const [seats, setSeats] = useState(String(car.seats));
   const [category, setCategory] = useState(car.category);
   const [description, setDescription] = useState(car.description ?? '');
+  const [descriptionEn, setDescriptionEn] = useState(car.descriptionEn ?? '');
   const [available, setAvailable] = useState(car.available);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,6 +54,7 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
           seats: Number(seats),
           category,
           description,
+          descriptionEn,
           available,
         },
       }).unwrap();
@@ -105,7 +107,7 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
         <Field label={t('adminCars.category')}>
           <select className="input" value={category} onChange={(e) => setCategory(e.target.value)}>
             {categories.map((c) => (
-              <option key={c.value} value={c.value}>{c.label}</option>
+              <option key={c.value} value={c.value}>{t(`categories.${c.value}`, { defaultValue: c.label })}</option>
             ))}
           </select>
         </Field>
@@ -113,6 +115,10 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
 
       <Field label={t('carDetail.description')}>
         <textarea className="input" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
+      </Field>
+
+      <Field label={t('carDetail.descriptionEn')}>
+        <textarea className="input" rows={4} value={descriptionEn} onChange={(e) => setDescriptionEn(e.target.value)} />
       </Field>
 
       <label className="flex items-center gap-2 text-sm text-gray-300">

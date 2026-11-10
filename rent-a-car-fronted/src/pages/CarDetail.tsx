@@ -9,9 +9,10 @@ import Loading from '../components/ui/Loading';
 import CarEditForm from '../components/cars/CarEditForm';
 import { errorMessage } from '../utils/errorMessage';
 import { useTranslation } from 'react-i18next';
+import { localizeEngine, localizeDescription } from '../utils/carText';
 
 const CarDetail = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -53,11 +54,11 @@ const CarDetail = () => {
 
       <div className="text-white">
         <h1 className="mb-2 text-3xl font-bold">{car.brand} {car.model}</h1>
-        <p className="mb-4 text-gray-400">{car.year} · {car.categoryLabel || car.category}</p>
-        <p className="mb-6 text-gray-300">{car.description}</p>
+        <p className="mb-4 text-gray-400">{car.year} · {t(`categories.${car.category}`, { defaultValue: car.categoryLabel || car.category })}</p>
+        <p className="mb-6 text-gray-300">{localizeDescription(car, i18n.resolvedLanguage)}</p>
 
         <ul className="mb-6 space-y-1 text-gray-300">
-          <li>{t('carDetail.engine')}: {car.engine}</li>
+          <li>{t('carDetail.engine')}: {localizeEngine(car.engine, i18n.resolvedLanguage)}</li>
           <li>{t('carDetail.power')}: {car.horsepower} {t('carDetail.hp')}</li>
           <li>{t('carDetail.fuel')}: {t(`fuel.${car.fuel}`, { defaultValue: car.fuel })}</li>
           <li>{t('carDetail.transmission')}: {t(`transmission.${car.transmission}`, { defaultValue: car.transmission })}</li>

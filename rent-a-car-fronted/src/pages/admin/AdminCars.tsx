@@ -211,7 +211,7 @@ const AdminCars = () => {
           <Field label={t('adminCars.category')}>
             <select className="input" value={category} onChange={(e) => setCategory(e.target.value)}>
               {categories.map((c) => (
-                <option key={c.value} value={c.value}>{c.label}</option>
+                <option key={c.value} value={c.value}>{t(`categories.${c.value}`, { defaultValue: c.label })}</option>
               ))}
             </select>
           </Field>
@@ -223,7 +223,7 @@ const AdminCars = () => {
           <div className="flex flex-wrap gap-2">
             {categories.map((c) => (
               <span key={c.id} className="flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-sm text-gray-300">
-                {c.label}
+                {t(`categories.${c.value}`, { defaultValue: c.label })}
                 <button type="button" className="text-red-400 hover:text-red-300" title={t('common.delete')} onClick={() => handleDeleteCategory(c.id, c.value)}>×</button>
               </span>
             ))}
