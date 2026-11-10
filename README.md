@@ -88,7 +88,7 @@ npm run dev               # http://localhost:5173
 | Ad | Məna |
 |---|---|
 | `PORT` | Server portu (defolt 5000) |
-| `JWT_SECRET` | Token üçün gizli söz (mütləq özün yaz) |
+| `JWT_SECRET` | Token üçün gizli söz. Yazmasan server özü təsadüfi açar yaradıb `data` qovluğunda saxlayır; internetə qoyanda Render-də özün yaz |
 | `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Admin hesabı (seed zamanı yaranır) |
 | `CLIENT_URL` | Frontend ünvanı (CORS üçün). Boş olsa hamıya açıqdır |
 

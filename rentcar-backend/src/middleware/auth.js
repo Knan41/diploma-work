@@ -1,10 +1,30 @@
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
 
-const SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
-if (!process.env.JWT_SECRET) {
-  console.warn('Diqqət: JWT_SECRET təyin edilməyib. Saytı internetə qoyanda .env-də öz gizli sözünü yaz.');
+// JWT_SECRET (.env) verilməyibsə, server təsadüfi açar yaradır və data qovluğunda saxlayır
+function loadSecret() {
+  if (process.env.JWT_SECRET) return process.env.JWT_SECRET;
+  const file = path.join(__dirname, '..', '..', 'data', '.jwt-secret');
+  try {
+    const saved = fs.readFileSync(file, 'utf8').trim();
+    if (saved) return saved;
+  } catch {
+    // fayl hələ yoxdur
+  }
+  const generated = crypto.randomBytes(32).toString('hex');
+  try {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, generated, { mode: 0o600 });
+  } catch {
+    // yazmaq alınmasa, açar yalnız bu işə salınma üçün qalır
+  }
+  return generated;
 }
+
+const SECRET = loadSecret();
 
 function signToken(userId) {
   return jwt.sign({ id: userId }, SECRET, { expiresIn: '7d' });
@@ -36,4 +56,4 @@ function adminOnly(req, res, next) {
   next();
 }
 
-module.exports = { signToken, authRequired, adminOnly };
+module.exports = { signToken, authRequired, adminOnly, SECRET };

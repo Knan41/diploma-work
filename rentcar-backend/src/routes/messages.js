@@ -1,10 +1,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
-const { authRequired, adminOnly } = require('../middleware/auth');
+const { authRequired, adminOnly, SECRET } = require('../middleware/auth');
 
 const router = express.Router();
-const SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
 
 const toMessage = (r) => ({ id: r.id, name: r.name, message: r.message, userId: r.user_id, createdAt: r.created_at });
 
