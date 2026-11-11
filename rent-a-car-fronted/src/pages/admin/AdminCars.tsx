@@ -5,16 +5,7 @@ import { useGetCarsQuery, useCreateCarMutation, useDeleteCarMutation, useUpdateC
 import { useGetCategoriesQuery, useCreateCategoryMutation, useDeleteCategoryMutation } from '../../store/api/categoriesApi';
 import Loading from '../../components/ui/Loading';
 import { errorMessage } from '../../utils/errorMessage';
-import i18n from '../../i18n';
-
-const readFile = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    if (file.size > 5 * 1024 * 1024) return reject(new Error(i18n.t('adminCars.imageTooBig')));
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = () => reject(new Error(i18n.t('adminCars.imageReadFail')));
-    reader.readAsDataURL(file);
-  });
+import { readImageFile } from '../../utils/imageFile';
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <label className="flex flex-col gap-1 text-sm text-gray-400">
@@ -24,7 +15,8 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 );
 
 const AdminCars = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang: 'az' | 'en' = i18n.resolvedLanguage === 'en' ? 'en' : 'az';
   const { data: cars = [], isLoading } = useGetCarsQuery();
   const [createCar, { isLoading: saving }] = useCreateCarMutation();
   const [updateCar] = useUpdateCarMutation();
@@ -67,6 +59,7 @@ const AdminCars = () => {
   const [transmission, setTransmission] = useState('automatic');
   const [seats, setSeats] = useState('5');
   const [category, setCategory] = useState('hybrid');
+  const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [fileKey, setFileKey] = useState(0);
 
@@ -74,7 +67,7 @@ const AdminCars = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
-      setImage(await readFile(file));
+      setImage(await readImageFile(file));
     } catch (err) {
       toast.error((err as Error).message);
       e.target.value = '';
@@ -100,6 +93,8 @@ const AdminCars = () => {
         seats: Number(seats) || 5,
         category,
         image,
+        description: description.trim() || undefined,
+        descriptionLang: lang,
       }).unwrap();
       toast.success(t('adminCars.carAdded'));
       setBrand('');
@@ -111,21 +106,11 @@ const AdminCars = () => {
       setTransmission('automatic');
       setSeats('5');
       setCategory('hybrid');
+      setDescription('');
       setImage('');
       setFileKey((k) => k + 1);
     } catch (err) {
       toast.error(errorMessage(err));
-    }
-  };
-
-  const changeImage = async (id: number, file?: File) => {
-    if (!file) return;
-    try {
-      const data = await readFile(file);
-      await updateCar({ id, data: { image: data } }).unwrap();
-      toast.success(t('adminCars.imageChanged'));
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : errorMessage(err));
     }
   };
 
@@ -217,6 +202,17 @@ const AdminCars = () => {
           </Field>
         </div>
 
+        <Field label={t('carDetail.description')}>
+          <textarea
+            className="input"
+            rows={3}
+            maxLength={1000}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <span className="text-xs text-gray-500">{t('carDetail.descriptionHint')}</span>
+        </Field>
+
         {/* Kateqoriyalar */}
         <div className="space-y-2 rounded-lg border border-white/10 p-4">
           <p className="text-sm font-medium text-white">{t('adminCars.categories')}</p>
@@ -274,18 +270,6 @@ const AdminCars = () => {
                 </button>
               </td>
               <td className="p-2 text-right">
-                <label className="mr-3 cursor-pointer text-white hover:underline">
-                  {t('adminCars.changeImage')}
-                  <input
-                    type="file"
-                    accept="image/png,image/jpeg,image/webp"
-                    className="hidden"
-                    onChange={(e) => {
-                      changeImage(car.id, e.target.files?.[0]);
-                      e.target.value = '';
-                    }}
-                  />
-                </label>
                 <button className="btn-danger" onClick={() => handleDelete(car.id)}>{t('common.delete')}</button>
               </td>
             </tr>

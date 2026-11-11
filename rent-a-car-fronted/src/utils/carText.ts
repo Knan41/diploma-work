@@ -9,11 +9,11 @@ export function localizeEngine(engine: string | null | undefined, lang: string |
     .replace(/hibrid/gi, 'hybrid');
 }
 
-// Seçilmiş dil ingilis dilidirsə və ingilis təsvir varsa onu, əks halda əsas təsviri qaytarır
+// Seçilmiş dildəki təsviri qaytarır; o dildə yoxdursa digər dildəkini göstərir
 export function localizeDescription(
   car: { description?: string | null; descriptionEn?: string | null },
   lang: string | undefined
 ): string {
-  if (lang === 'en' && car.descriptionEn) return car.descriptionEn;
-  return car.description ?? '';
+  if (lang === 'en') return car.descriptionEn || car.description || '';
+  return car.description || car.descriptionEn || '';
 }

@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import AdminLayout from './components/layout/AdminLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import ScrollToTop from './components/layout/ScrollToTop';
 import Home from './pages/Home';
 import Cars from './pages/Cars';
 import CarDetail from './pages/CarDetail';
@@ -20,6 +21,8 @@ import NotFound from './pages/NotFound';
 
 function App() {
   return (
+    <>
+    <ScrollToTop />
     <Routes>
       {/* Public Routes */}
       <Route element={<Layout />}>
@@ -51,6 +54,7 @@ function App() {
         </Route>
       </Route>
     </Routes>
+    </>
   );
 }
 

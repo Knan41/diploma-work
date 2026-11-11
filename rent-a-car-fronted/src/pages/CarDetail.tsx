@@ -67,7 +67,7 @@ const CarDetail = () => {
 
         <p className="mb-6 text-2xl font-bold text-white">₼{car.pricePerDay} / {t('common.day')}</p>
 
-        {isAdmin && <CarEditForm key={car.id} car={car} />}
+        {isAdmin && <CarEditForm key={`${car.id}-${i18n.resolvedLanguage}`} car={car} />}
 
         {!isAdmin && (
         <div className="card space-y-3">

@@ -111,7 +111,7 @@
     "editTitle": "Edit car information",
     "description": "Description",
     "saved": "Changes saved",
-    "descriptionEn": "Description (English)"
+    "descriptionHint": "Write the description in the currently selected language; it is translated to the other language automatically"
   },
   "contact": {
     "namePh": "Your name",
@@ -191,7 +191,6 @@
     "categoryDeleted": "Category deleted",
     "imageRequired": "Please add a car image",
     "carAdded": "Car added",
-    "imageChanged": "Image updated",
     "carDeleted": "Car deleted",
     "addCar": "Add new car",
     "preview": "preview",
@@ -214,8 +213,7 @@
     "thPrice": "Price",
     "thAvailable": "Available",
     "yes": "Yes",
-    "no": "No",
-    "changeImage": "Change image"
+    "no": "No"
   },
   "server": {
     "serverError": "Server error",
@@ -261,7 +259,8 @@
     "hpInvalid": "Horsepower is not valid",
     "accelInvalid": "Acceleration is not valid",
     "noSuchCategory": "No such category",
-    "adminCannotBook": "Admins cannot rent a car"
+    "adminCannotBook": "Admins cannot rent a car",
+    "descriptionTooLong": "Description is too long (maximum 1000 characters)"
   },
   "categories": {
     "hybrid": "Hybrid",

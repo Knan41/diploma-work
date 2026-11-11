@@ -30,7 +30,7 @@ export interface CreateCarRequest {
   category?: string;
   image?: string;
   description?: string;
-  descriptionEn?: string;
+  descriptionLang?: 'az' | 'en';
   engine?: string;
   horsepower?: number;
   acceleration?: number;

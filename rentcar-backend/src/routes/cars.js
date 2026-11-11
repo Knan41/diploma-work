@@ -3,6 +3,7 @@ const db = require('../db');
 const { authRequired, adminOnly } = require('../middleware/auth');
 
 const fs = require('fs');
+const { translateText } = require('../translate');
 const path = require('path');
 
 const router = express.Router();
@@ -45,6 +46,21 @@ const toCar = (r, labels = categoryLabels()) => ({
 const FUELS = ['petrol', 'diesel', 'hybrid', 'electric'];
 const TRANSMISSIONS = ['automatic', 'manual'];
 
+const MAX_DESCRIPTION = 1000;
+
+// Admin təsviri bir dildə yazır (az və ya en), digər dilə avtomatik tərcümə olunur.
+// Qaytarır: { description (az), descriptionEn (en) }; tərcümə alınmasa digər dil null olur
+async function buildDescriptions(text, lang) {
+  const clean = String(text || '').trim();
+  if (!clean) return { description: null, descriptionEn: null };
+  const from = lang === 'en' ? 'en' : 'az';
+  const to = from === 'en' ? 'az' : 'en';
+  const translated = await translateText(clean, from, to);
+  return from === 'az'
+    ? { description: clean, descriptionEn: translated }
+    : { description: translated, descriptionEn: clean };
+}
+
 function validateCar(body, partial = false) {
   const b = body || {};
   const need = (k) => !partial && (b[k] === undefined || b[k] === '');
@@ -59,6 +75,8 @@ function validateCar(body, partial = false) {
     return `transmission: ${TRANSMISSIONS.join(', ')}`;
   if (b.category !== undefined && !db.prepare('SELECT 1 FROM categories WHERE value = ?').get(b.category))
     return 'Belə kateqoriya yoxdur';
+  if (typeof b.description === 'string' && b.description.length > MAX_DESCRIPTION)
+    return 'Təsvir çox uzundur (maksimum 1000 simvol)';
   return null;
 }
 
@@ -111,11 +129,13 @@ router.get('/:id/booked-dates', (req, res) => {
 });
 
 // POST /api/cars  (admin)
-router.post('/', authRequired, adminOnly, (req, res) => {
+router.post('/', authRequired, adminOnly, async (req, res, next) => {
+  try {
   const err = validateCar(req.body);
   if (err) return res.status(400).json({ message: err });
   const b = req.body;
   if (!b.image) return res.status(400).json({ message: 'Maşının şəkli mütləqdir' });
+  const desc = await buildDescriptions(b.description, b.descriptionLang);
   const info = db
     .prepare(
       `INSERT INTO cars (brand, model, year, price_per_day, fuel, transmission, seats, category, image, description, engine, horsepower, acceleration, available, description_en)
@@ -124,24 +144,33 @@ router.post('/', authRequired, adminOnly, (req, res) => {
     .run(
       b.brand.trim(), b.model.trim(), Number(b.year), Number(b.pricePerDay),
       b.fuel || 'petrol', b.transmission || 'automatic', Number(b.seats) || 5,
-      b.category || 'hybrid', saveImage(b.image), b.description || null,
+      b.category || 'hybrid', saveImage(b.image), desc.description,
       b.engine || null, b.horsepower ? Number(b.horsepower) : null,
       b.acceleration ? Number(b.acceleration) : null,
       b.available === false ? 0 : 1,
-      b.descriptionEn || null
+      desc.descriptionEn
     );
   const row = db.prepare('SELECT * FROM cars WHERE id = ?').get(info.lastInsertRowid);
   res.status(201).json(toCar(row));
+  } catch (e) {
+    next(e);
+  }
 });
 
 // PUT /api/cars/:id  (admin)
-router.put('/:id', authRequired, adminOnly, (req, res) => {
+router.put('/:id', authRequired, adminOnly, async (req, res, next) => {
+  try {
   const row = db.prepare('SELECT * FROM cars WHERE id = ?').get(req.params.id);
   if (!row) return res.status(404).json({ message: 'Maşın tapılmadı' });
   const err = validateCar(req.body, true);
   if (err) return res.status(400).json({ message: err });
 
   const b = req.body;
+  // Təsvir göndərilibsə, yenidən tərcümə olunur; göndərilməyibsə hər iki dil olduğu kimi qalır
+  const desc =
+    b.description === undefined
+      ? { description: row.description, descriptionEn: row.description_en }
+      : await buildDescriptions(b.description, b.descriptionLang);
   db.prepare(
     `UPDATE cars SET brand=?, model=?, year=?, price_per_day=?, fuel=?, transmission=?,
      seats=?, category=?, image=?, description=?, engine=?, horsepower=?, acceleration=?, available=?, description_en=? WHERE id=?`
@@ -149,13 +178,16 @@ router.put('/:id', authRequired, adminOnly, (req, res) => {
     b.brand ?? row.brand, b.model ?? row.model, Number(b.year ?? row.year),
     Number(b.pricePerDay ?? row.price_per_day), b.fuel ?? row.fuel,
     b.transmission ?? row.transmission, Number(b.seats ?? row.seats),
-    b.category ?? row.category, b.image ? saveImage(b.image) : row.image, b.description ?? row.description,
+    b.category ?? row.category, b.image ? saveImage(b.image) : row.image, desc.description,
     b.engine ?? row.engine, b.horsepower === undefined ? row.horsepower : (Number(b.horsepower) || null),
     b.acceleration === undefined ? row.acceleration : (Number(b.acceleration) || null),
     b.available === undefined ? row.available : b.available ? 1 : 0,
-    b.descriptionEn ?? row.description_en, row.id
+    desc.descriptionEn, row.id
   );
   res.json(toCar(db.prepare('SELECT * FROM cars WHERE id = ?').get(row.id)));
+  } catch (e) {
+    next(e);
+  }
 });
 
 // DELETE /api/cars/:id  (admin)

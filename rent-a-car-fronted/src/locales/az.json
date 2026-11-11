@@ -111,7 +111,7 @@
     "editTitle": "Maşın məlumatlarını dəyiş",
     "description": "Təsvir",
     "saved": "Məlumatlar yadda saxlandı",
-    "descriptionEn": "Təsvir (ingilis dilində)"
+    "descriptionHint": "Təsviri hazırda seçilmiş dildə yaz, digər dilə avtomatik tərcümə olunacaq"
   },
   "contact": {
     "namePh": "Adınız",
@@ -191,7 +191,6 @@
     "categoryDeleted": "Kateqoriya silindi",
     "imageRequired": "Maşının şəklini əlavə edin",
     "carAdded": "Maşın əlavə edildi",
-    "imageChanged": "Şəkil dəyişdi",
     "carDeleted": "Maşın silindi",
     "addCar": "Yeni maşın əlavə et",
     "preview": "önbaxış",
@@ -214,8 +213,7 @@
     "thPrice": "Qiymət",
     "thAvailable": "Mövcud",
     "yes": "Bəli",
-    "no": "Xeyr",
-    "changeImage": "Şəkli dəyiş"
+    "no": "Xeyr"
   },
   "server": {
     "serverError": "Server xətası",
@@ -261,7 +259,8 @@
     "hpInvalid": "At gücü düzgün deyil",
     "accelInvalid": "Sürətlənmə düzgün deyil",
     "noSuchCategory": "Belə kateqoriya yoxdur",
-    "adminCannotBook": "Admin maşın icarəyə götürə bilməz"
+    "adminCannotBook": "Admin maşın icarəyə götürə bilməz",
+    "descriptionTooLong": "Təsvir çox uzundur (maksimum 1000 simvol)"
   },
   "categories": {
     "hybrid": "Hibrid",

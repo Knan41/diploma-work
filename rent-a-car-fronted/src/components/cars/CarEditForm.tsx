@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useUpdateCarMutation } from '../../store/api/carsApi';
 import { useGetCategoriesQuery } from '../../store/api/categoriesApi';
 import { errorMessage } from '../../utils/errorMessage';
+import { readImageFile } from '../../utils/imageFile';
+import { localizeDescription } from '../../utils/carText';
 import type { Car } from '../../types';
 
 interface CarEditFormProps {
@@ -19,7 +21,9 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 
 // Admin hesabı ilə maşın səhifəsində maşının məlumatlarını dəyişmək üçün
 const CarEditForm = ({ car }: CarEditFormProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang: 'az' | 'en' = i18n.resolvedLanguage === 'en' ? 'en' : 'az';
+  const currentDescription = localizeDescription(car, lang);
   const { data: categories = [] } = useGetCategoriesQuery();
   const [updateCar, { isLoading }] = useUpdateCarMutation();
 
@@ -33,9 +37,21 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
   const [transmission, setTransmission] = useState(car.transmission);
   const [seats, setSeats] = useState(String(car.seats));
   const [category, setCategory] = useState(car.category);
-  const [description, setDescription] = useState(car.description ?? '');
-  const [descriptionEn, setDescriptionEn] = useState(car.descriptionEn ?? '');
+  const [description, setDescription] = useState(currentDescription);
+  const [image, setImage] = useState('');
+  const [fileKey, setFileKey] = useState(0);
   const [available, setAvailable] = useState(car.available);
+
+  const pickImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setImage(await readImageFile(file));
+    } catch (err) {
+      toast.error((err as Error).message);
+      e.target.value = '';
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,12 +69,15 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
           transmission,
           seats: Number(seats),
           category,
-          description,
-          descriptionEn,
+          // Təsvir yalnız dəyişəndə göndərilir; digər dilə avtomatik tərcümə olunur
+          ...(description !== currentDescription ? { description, descriptionLang: lang } : {}),
+          image: image || undefined,
           available,
         },
       }).unwrap();
       toast.success(t('carDetail.saved'));
+      setImage('');
+      setFileKey((k) => k + 1);
     } catch (err) {
       toast.error(errorMessage(err));
     }
@@ -67,6 +86,25 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
   return (
     <form onSubmit={handleSubmit} className="card space-y-3">
       <h2 className="text-lg font-semibold">{t('carDetail.editTitle')}</h2>
+
+      <div className="flex items-center gap-4 rounded-lg border border-dashed border-white/30 p-3">
+        <img
+          src={image || car.image}
+          alt={`${car.brand} ${car.model}`}
+          className="h-20 w-32 shrink-0 rounded-lg object-cover"
+        />
+        <div className="space-y-1">
+          <p className="text-sm font-medium text-white">{t('adminCars.image')}</p>
+          <input
+            key={fileKey}
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            onChange={pickImage}
+            className="block text-sm text-gray-300 file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white file:px-4 file:py-2 file:font-semibold file:text-black hover:file:bg-gray-200"
+          />
+          <p className="text-xs text-gray-500">{t('adminCars.imageHint')}</p>
+        </div>
+      </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label={t('adminCars.brand')}>
@@ -114,11 +152,14 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
       </div>
 
       <Field label={t('carDetail.description')}>
-        <textarea className="input" rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
-      </Field>
-
-      <Field label={t('carDetail.descriptionEn')}>
-        <textarea className="input" rows={4} value={descriptionEn} onChange={(e) => setDescriptionEn(e.target.value)} />
+        <textarea
+          className="input"
+          rows={4}
+          maxLength={1000}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <span className="text-xs text-gray-500">{t('carDetail.descriptionHint')}</span>
       </Field>
 
       <label className="flex items-center gap-2 text-sm text-gray-300">

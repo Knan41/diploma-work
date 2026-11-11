@@ -46,6 +46,7 @@ const SERVER_MESSAGES: Record<string, string> = {
   'At gücü düzgün deyil': 'server.hpInvalid',
   'Sürətlənmə düzgün deyil': 'server.accelInvalid',
   'Belə kateqoriya yoxdur': 'server.noSuchCategory',
+  'Təsvir çox uzundur (maksimum 1000 simvol)': 'server.descriptionTooLong',
 };
 
 // Serverdən gələn xəta mesajını götürür və dilə uyğun göstərir
