@@ -19,7 +19,6 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
   </label>
 );
 
-// Admin hesabı ilə maşın səhifəsində maşının məlumatlarını dəyişmək üçün
 const CarEditForm = ({ car }: CarEditFormProps) => {
   const { t, i18n } = useTranslation();
   const lang: 'az' | 'en' = i18n.resolvedLanguage === 'en' ? 'en' : 'az';
@@ -69,7 +68,6 @@ const CarEditForm = ({ car }: CarEditFormProps) => {
           transmission,
           seats: Number(seats),
           category,
-          // Təsvir yalnız dəyişəndə göndərilir; digər dilə avtomatik tərcümə olunur
           ...(description !== currentDescription ? { description, descriptionLang: lang } : {}),
           image: image || undefined,
           available,

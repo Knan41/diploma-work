@@ -1,6 +1,3 @@
-// Bazadan gələn maşın mətnlərini seçilmiş dilə uyğunlaşdırır
-
-// Mühərrik adındakı Azərbaycan sözlərini ingilis dilində göstərir
 export function localizeEngine(engine: string | null | undefined, lang: string | undefined): string {
   if (!engine) return '';
   if (lang !== 'en') return engine;
@@ -9,7 +6,6 @@ export function localizeEngine(engine: string | null | undefined, lang: string |
     .replace(/hibrid/gi, 'hybrid');
 }
 
-// Seçilmiş dildəki təsviri qaytarır; o dildə yoxdursa digər dildəkini göstərir
 export function localizeDescription(
   car: { description?: string | null; descriptionEn?: string | null },
   lang: string | undefined

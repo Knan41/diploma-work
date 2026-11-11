@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 html {
   scroll-behavior: smooth;
 }
@@ -20,7 +19,6 @@ body {
   flex-direction: column;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -38,13 +36,11 @@ body {
   background: #555;
 }
 
-/* Selection styling */
 ::selection {
   background-color: rgba(255, 255, 255, 0.3);
   color: #fff;
 }
 
-/* Input autofill dark styling */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
@@ -53,13 +49,11 @@ input:-webkit-autofill:focus {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Date input styling for dark theme */
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
   cursor: pointer;
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -87,14 +81,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Glass effect utility */
 .glass {
   background: rgba(17, 17, 17, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
-/* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #ffffff, #d4d4d4);
   -webkit-background-clip: text;
@@ -102,7 +94,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-clip: text;
 }
 
-/* Sadə ortaq siniflər */
 .input {
   @apply rounded-lg border border-white/10 bg-[#1a1a1a] px-4 py-2 text-white outline-none focus:border-white;
 }

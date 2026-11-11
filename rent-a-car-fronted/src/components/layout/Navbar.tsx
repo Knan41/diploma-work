@@ -38,7 +38,6 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Hər hansı linkə klik ediləndə menyuları bağla
   const closeMenus = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('a')) {
       setIsMobileOpen(false);
@@ -71,7 +70,6 @@ const Navbar = () => {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <Car className="h-8 w-8 text-white" />
           <span className="text-2xl font-bold tracking-tight text-white">
@@ -79,7 +77,6 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop Nav Links */}
         <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <Link
@@ -94,7 +91,6 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Desktop Auth */}
         <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
           {isAuthenticated && user ? (
@@ -171,7 +167,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           className="rounded-lg p-2 text-gray-300 transition-colors hover:bg-white/5 md:hidden"
@@ -180,7 +175,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileOpen && (
         <div className="border-t border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl md:hidden">
           <div className="space-y-1 px-4 py-4">

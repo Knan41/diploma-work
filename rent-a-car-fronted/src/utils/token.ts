@@ -1,4 +1,3 @@
-// JWT tokenin müddətinin bitib-bitmədiyini yoxlayır (serverə sorğu göndərmədən)
 export function isTokenExpired(token: string | null): boolean {
   if (!token) return true;
   try {

@@ -24,7 +24,6 @@ function App() {
     <>
     <ScrollToTop />
     <Routes>
-      {/* Public Routes */}
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<Cars />} />
@@ -36,14 +35,12 @@ function App() {
         <Route path="/not-found" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
 
-        {/* Protected User Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/my-bookings" element={<MyBookings />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
 
-      {/* Admin Routes */}
       <Route element={<ProtectedRoute adminOnly />}>
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<Dashboard />} />

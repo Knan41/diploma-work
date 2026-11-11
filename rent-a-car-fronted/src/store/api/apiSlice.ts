@@ -9,7 +9,6 @@ import toast from 'react-hot-toast';
 import i18n from '../../i18n';
 import { logout } from '../slices/authSlice';
 
-// Backend ünvanı: internetə qoyanda VITE_API_URL ilə verilir (məs. https://rentcar.onrender.com/api)
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/+$/, '');
 
 const rawBaseQuery = fetchBaseQuery({
@@ -23,7 +22,6 @@ const rawBaseQuery = fetchBaseQuery({
   },
 });
 
-// Token etibarsızdırsa və ya vaxtı bitibsə (7 gün), istifadəçi avtomatik çıxış edir
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
   args,
   api,

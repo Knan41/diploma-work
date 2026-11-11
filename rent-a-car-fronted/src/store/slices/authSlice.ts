@@ -8,7 +8,6 @@ interface AuthState {
   token: string | null;
 }
 
-// Sayt açılanda token müddəti bitibsə, giriş avtomatik silinir
 const storedToken = localStorage.getItem('token');
 const tokenExpired = !!storedToken && isTokenExpired(storedToken);
 if (tokenExpired) {

@@ -139,7 +139,6 @@ const AdminCars = () => {
       <form onSubmit={handleAdd} className="card space-y-4">
         <h2 className="text-lg font-semibold text-white">{t('adminCars.addCar')}</h2>
 
-        {/* Şəkil */}
         <div className="flex flex-col gap-3 rounded-lg border border-dashed border-white/40 p-4 sm:flex-row sm:items-center">
           <div className="flex h-28 w-44 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white/5 text-xs text-gray-500">
             {image ? <img src={image} alt={t('adminCars.preview')} className="h-full w-full object-cover" /> : t('adminCars.noImage')}
@@ -213,7 +212,6 @@ const AdminCars = () => {
           <span className="text-xs text-gray-500">{t('carDetail.descriptionHint')}</span>
         </Field>
 
-        {/* Kateqoriyalar */}
         <div className="space-y-2 rounded-lg border border-white/10 p-4">
           <p className="text-sm font-medium text-white">{t('adminCars.categories')}</p>
           <div className="flex flex-wrap gap-2">

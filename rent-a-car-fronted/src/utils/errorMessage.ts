@@ -1,6 +1,5 @@
 import i18n from '../i18n';
 
-// Backend-in göndərdiyi (azərbaycanca) mesajları seçilmiş dilə çevirir
 const SERVER_MESSAGES: Record<string, string> = {
   'Server xətası': 'server.serverError',
   'Səhifə tapılmadı': 'server.pageNotFound',
@@ -49,7 +48,6 @@ const SERVER_MESSAGES: Record<string, string> = {
   'Təsvir çox uzundur (maksimum 1000 simvol)': 'server.descriptionTooLong',
 };
 
-// Serverdən gələn xəta mesajını götürür və dilə uyğun göstərir
 export function errorMessage(err: unknown): string {
   const message = (err as { data?: { message?: string } })?.data?.message;
   if (!message) return i18n.t('common.error');

@@ -2,7 +2,6 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { selectIsAuthenticated, selectIsAdmin } from '../../store/slices/authSlice';
 
-// Girişi olmayanı login səhifəsinə, admin olmayanı əsas səhifəyə göndərir
 const ProtectedRoute = ({ adminOnly = false }: { adminOnly?: boolean }) => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const isAdmin = useAppSelector(selectIsAdmin);

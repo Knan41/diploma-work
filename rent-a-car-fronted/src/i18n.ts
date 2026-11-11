@@ -14,7 +14,7 @@ const getInitialLanguage = (): Language => {
         const saved = localStorage.getItem(STORAGE_KEY)
         if (saved && (LANGUAGES as readonly string[]).includes(saved)) return saved as Language
     } catch {
-        // localStorage əlçatan deyilsə, susmaya görə az
+        return "az"
     }
     return "az"
 }
@@ -32,13 +32,12 @@ i18n.use(initReactI18next).init({
     }
 })
 
-// Dil dəyişəndə yadda saxla və <html lang> yenilə
 const applyLanguage = (lng: string) => {
     document.documentElement.lang = lng
     try {
         localStorage.setItem(STORAGE_KEY, lng)
     } catch {
-        // ignore
+        return
     }
 }
 

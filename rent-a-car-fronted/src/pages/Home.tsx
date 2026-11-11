@@ -50,7 +50,6 @@ const Home = () => {
 
   return (
     <div className="bg-[#0a0a0a]">
-      {/* Hero Section */}
       <section className="relative flex min-h-screen items-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-[#0a0a0a]/50" />
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80')] bg-cover bg-center bg-no-repeat opacity-40" />
@@ -91,7 +90,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Cars */}
       <section className="bg-[#0a0a0a] py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
@@ -127,7 +125,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why Us */}
       <section className="bg-[#111111] py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
@@ -181,7 +178,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Stats */}
       <section ref={statsRef} className="bg-[#0a0a0a] py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -212,7 +208,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="bg-[#111111] py-24">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">

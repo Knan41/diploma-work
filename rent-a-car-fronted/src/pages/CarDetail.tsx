@@ -28,7 +28,6 @@ const CarDetail = () => {
   if (isLoading) return <Loading />;
   if (!car) return <p className="p-10 text-gray-400">{t('common.carNotFound')}</p>;
 
-  // Neçə gün və ümumi qiymət
   let days = 0;
   if (startDate && endDate && endDate >= startDate) {
     days = (new Date(endDate).getTime() - new Date(startDate).getTime()) / 86400000 + 1;

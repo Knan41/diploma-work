@@ -9,7 +9,6 @@ const Footer = () => {
     <footer className="border-t border-white/10 bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Company Info */}
           <div>
             <Link to="/" className="mb-4 flex items-center gap-2">
               <Car className="h-8 w-8 text-white" />
@@ -48,7 +47,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="mb-4 text-lg font-semibold text-white">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
@@ -70,7 +68,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
             <h3 className="mb-4 text-lg font-semibold text-white">{t('footer.services')}</h3>
             <ul className="space-y-3">
@@ -88,7 +85,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
             <h3 className="mb-4 text-lg font-semibold text-white">{t('nav.contact')}</h3>
             <ul className="space-y-4">
@@ -114,7 +110,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom */}
         <div className="mt-12 border-t border-white/10 pt-8 text-center">
           <p className="text-sm text-gray-500">
             &copy; {new Date().getFullYear()} RENTCAR. {t('footer.rights')}

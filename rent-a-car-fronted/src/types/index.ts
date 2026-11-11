@@ -1,4 +1,3 @@
-// Car
 export interface Car {
   id: number;
   brand: string;
@@ -58,7 +57,6 @@ export interface BookedDateRange {
   endDate: string;
 }
 
-// User
 export interface User {
   id: number;
   name: string;
@@ -73,7 +71,6 @@ export interface UpdateUserRoleRequest {
   role: 'user' | 'admin';
 }
 
-// Auth
 export interface LoginRequest {
   email: string;
   password: string;
@@ -96,7 +93,6 @@ export interface UpdateProfileRequest {
   password?: string;
 }
 
-// Booking
 export interface Booking {
   id: number;
   carId: number;
@@ -132,7 +128,6 @@ export interface UpdateBookingStatusRequest {
   status: 'pending' | 'approved' | 'cancelled';
 }
 
-// Stats
 export interface StatsResponse {
   totalCars: number;
   availableCars: number;
@@ -144,7 +139,6 @@ export interface StatsResponse {
   revenue: number;
 }
 
-// Contact messages
 export interface ContactMessage {
   id: number;
   name: string;
@@ -158,7 +152,6 @@ export interface SendMessageRequest {
   message: string;
 }
 
-// Category
 export interface Category {
   id: number;
   value: string;
