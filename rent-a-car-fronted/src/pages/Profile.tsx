@@ -38,14 +38,17 @@ const Profile = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const updated = await updateProfile(password ? { name, password } : { name }).unwrap();
-      dispatch(setCredentials({ user: updated, token: token! }));
-      setPassword('');
-      toast.success(t('profile.updated'));
-    } catch (err) {
-      toast.error(errorMessage(err));
+
+    const result = await updateProfile(password ? { name, password } : { name });
+
+    if ('error' in result) {
+      toast.error(errorMessage(result.error));
+      return;
     }
+
+    dispatch(setCredentials({ user: result.data, token: token! }));
+    setPassword('');
+    toast.success(t('profile.updated'));
   };
 
   return (
