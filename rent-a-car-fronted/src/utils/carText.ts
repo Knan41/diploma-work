@@ -1,9 +1,9 @@
 export function localizeEngine(engine: string | null | undefined, lang: string | undefined): string {
   if (!engine) return '';
   if (lang !== 'en') return engine;
-  return engine
-    .replace(/^elektrik mühərrik$/i, 'Electric motor')
-    .replace(/hibrid/gi, 'hybrid');
+
+  if (engine === 'Elektrik mühərrik') return 'Electric motor';
+  return engine.replace('hibrid', 'hybrid');
 }
 
 export function localizeDescription(
