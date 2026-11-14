@@ -5,6 +5,7 @@ import { useGetCarsQuery } from '../store/api/carsApi';
 import CarCard from '../components/cars/CarCard';
 import Loading from '../components/ui/Loading';
 import { Shield, Clock, ThumbsUp, Headphones, ArrowRight, Car, Users, CalendarCheck, Star } from 'lucide-react';
+import heroCar from '../assets/hero-car.jpg';
 
 const useCountUp = (end: number, duration: number = 2000, start: boolean = false) => {
   const [count, setCount] = useState(0);
@@ -52,7 +53,7 @@ const Home = () => {
     <div className="bg-[#0a0a0a]">
       <section className="relative flex min-h-screen items-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/90 to-[#0a0a0a]/50" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80')] bg-cover bg-center bg-no-repeat opacity-40" />
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" style={{ backgroundImage: `url(${heroCar})` }} />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/50" />
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 py-32 sm:px-6 lg:px-8">
