@@ -9,7 +9,10 @@ import toast from 'react-hot-toast';
 import i18n from '../../i18n';
 import { logout } from '../slices/authSlice';
 
-const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace(/\/+$/, '');
+const API_URL = (
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://localhost:5000/api' : 'https://rentcar-backend-9d07.onrender.com/api')
+).replace(/\/+$/, '');
 
 const rawBaseQuery = fetchBaseQuery({
   baseUrl: API_URL,
