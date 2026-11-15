@@ -1,10 +1,7 @@
-// Mətni avtomatik tərcümə edir (MyMemory pulsuz API: https://mymemory.translated.net/doc/spec.php)
-// Xəta olarsa (internet, limit və s.) null qaytarır, sayt işləməyə davam edir.
 const API_URL = process.env.TRANSLATE_API_URL || 'https://api.mymemory.translated.net/get';
-const MAX_BYTES = 450; // MyMemory bir sorğuda ən çox 500 bayt qəbul edir
+const MAX_BYTES = 450;
 const TIMEOUT_MS = 8000;
 
-// Mətni cümlələrə, lazım olsa sözlərə bölərək MAX_BYTES-dan böyük olmayan hissələr düzəldir
 function splitText(text) {
   const bytes = (s) => Buffer.byteLength(s, 'utf8');
   const parts = [];
@@ -54,7 +51,6 @@ async function translateChunk(q, from, to) {
   return decodeEntities(out).trim();
 }
 
-// from, to: 'az' və ya 'en'. Uğursuz olarsa null qaytarır.
 async function translateText(text, from, to) {
   const clean = String(text || '').trim();
   if (!clean) return null;

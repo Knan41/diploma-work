@@ -30,7 +30,6 @@ const dateRe = /^\d{4}-\d{2}-\d{2}$/;
 const today = () => new Date().toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((new Date(b) - new Date(a)) / 86400000) + 1;
 
-// POST /api/bookings   { carId, startDate, endDate }  (tarix formatı: YYYY-MM-DD)
 router.post('/', authRequired, (req, res) => {
   if (req.user.role === 'admin')
     return res.status(403).json({ message: 'Admin maşın icarəyə götürə bilməz' });
@@ -64,13 +63,11 @@ router.post('/', authRequired, (req, res) => {
   res.status(201).json(toBooking(db.prepare(BASE + ' WHERE b.id = ?').get(info.lastInsertRowid)));
 });
 
-// GET /api/bookings/my  (özümün rezervasiyalarım)
 router.get('/my', authRequired, (req, res) => {
   const rows = db.prepare(BASE + ' WHERE b.user_id = ? ORDER BY b.id DESC').all(req.user.id);
   res.json(rows.map(toBooking));
 });
 
-// PATCH /api/bookings/:id/cancel  (istifadəçi yalnız öz "pending" sifarişini ləğv edə bilər)
 router.patch('/:id/cancel', authRequired, (req, res) => {
   const row = db.prepare('SELECT * FROM bookings WHERE id = ?').get(req.params.id);
   if (!row || row.user_id !== req.user.id)
@@ -81,7 +78,6 @@ router.patch('/:id/cancel', authRequired, (req, res) => {
   res.json(toBooking(db.prepare(BASE + ' WHERE b.id = ?').get(row.id)));
 });
 
-// GET /api/bookings?status=pending  (admin: hamısı)
 router.get('/', authRequired, adminOnly, (req, res) => {
   const { status } = req.query;
   const rows = status
@@ -90,14 +86,12 @@ router.get('/', authRequired, adminOnly, (req, res) => {
   res.json(rows.map(toBooking));
 });
 
-// PATCH /api/bookings/:id/status   { status: 'approved' | 'cancelled' | 'pending' }  (admin)
 router.patch('/:id/status', authRequired, adminOnly, (req, res) => {
   const { status } = req.body || {};
   if (!['pending', 'approved', 'cancelled'].includes(status))
     return res.status(400).json({ message: 'status: pending, approved və ya cancelled olmalıdır' });
   const row = db.prepare('SELECT id, status, cancelled_by FROM bookings WHERE id = ?').get(req.params.id);
   if (!row) return res.status(404).json({ message: 'Rezervasiya tapılmadı' });
-  // İstifadəçi özü ləğv edibsə, admin bərpa edə bilməz
   if (row.status === 'cancelled' && row.cancelled_by === 'user' && status !== 'cancelled')
     return res.status(403).json({ message: 'İstifadəçinin ləğv etdiyi rezervasiyanı bərpa etmək olmaz' });
   if (status === 'cancelled' && row.status !== 'cancelled')

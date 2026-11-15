@@ -7,12 +7,10 @@ router.use(authRequired, adminOnly);
 
 const toUser = (r) => ({ id: r.id, name: r.name, email: r.email, role: r.role, phone: r.phone, createdAt: r.created_at });
 
-// GET /api/users
 router.get('/', (req, res) => {
   res.json(db.prepare('SELECT id, name, email, role, phone, created_at FROM users ORDER BY id').all().map(toUser));
 });
 
-// PATCH /api/users/:id/role   { role: 'user' | 'admin' }
 router.patch('/:id/role', (req, res) => {
   const { role } = req.body || {};
   if (!['user', 'admin'].includes(role))
@@ -24,7 +22,6 @@ router.patch('/:id/role', (req, res) => {
   res.json(toUser(db.prepare('SELECT * FROM users WHERE id = ?').get(req.params.id)));
 });
 
-// DELETE /api/users/:id
 router.delete('/:id', (req, res) => {
   if (Number(req.params.id) === req.user.id)
     return res.status(400).json({ message: 'Öz hesabınızı silə bilməzsiniz' });

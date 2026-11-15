@@ -4,7 +4,6 @@ const { authRequired, adminOnly } = require('../middleware/auth');
 
 const router = express.Router();
 
-// GET /api/stats  (admin dashboard)
 router.get('/', authRequired, adminOnly, (req, res) => {
   const count = (sql) => db.prepare(sql).get().n;
   res.json({

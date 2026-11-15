@@ -32,7 +32,6 @@ const slugOf = (brand, model) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-// public/images/ qovluğunda real şəkil (jpg, png, webp) varsa onu işlədir, yoxdursa avtomatik təsvir yaradır
 function carImage(c, i) {
   const slug = slugOf(c[0], c[1]);
   for (const ext of ["jpg", "jpeg", "png", "webp"]) {
@@ -46,9 +45,7 @@ function carImage(c, i) {
   return `/images/${slug}.svg`;
 }
 
-// [brand, model, year, price, fuel, transmission, seats, category, available, description, engine, horsepower, acceleration]
 const cars = [
-  // --- HİBRİD ---
   [
     "Toyota",
     "Prius",
@@ -124,7 +121,6 @@ const cars = [
     308,
     7.7,
   ],
-  // --- ELEKTRİK ---
   [
     "Tesla",
     "Model 3",
@@ -200,7 +196,6 @@ const cars = [
     335,
     5.7,
   ],
-  // --- SPORT ---
   [
     "Ford",
     "Mustang GT",
@@ -338,7 +333,6 @@ cars.forEach((c, i) =>
   ),
 );
 
-// [userId, carId, startOffset, endOffset, status]
 const bookings = [
   [2, 2, 2, 5, "pending"],
   [2, 7, 10, 12, "approved"],

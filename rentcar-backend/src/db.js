@@ -1,4 +1,4 @@
-const { DatabaseSync } = require('node:sqlite'); // Node-un daxili SQLite-ı, ayrıca quraşdırma lazım deyil
+const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 const fs = require('fs');
 
@@ -57,14 +57,12 @@ db.exec(`
   );
 `);
 
-// Köhnə baza varsa, yeni sütunları avtomatik əlavə edir
 const carCols = db.prepare('PRAGMA table_info(cars)').all().map((c) => c.name);
 if (!carCols.includes('engine')) db.exec('ALTER TABLE cars ADD COLUMN engine TEXT');
 if (!carCols.includes('horsepower')) db.exec('ALTER TABLE cars ADD COLUMN horsepower INTEGER');
 if (!carCols.includes('acceleration')) db.exec('ALTER TABLE cars ADD COLUMN acceleration REAL');
 if (!carCols.includes('description_en')) db.exec('ALTER TABLE cars ADD COLUMN description_en TEXT');
 
-// Mövcud maşınlar üçün ingilis təsvir boşdursa, bilinən seed təsvirlərini doldurur
 {
   const { descriptionsEn } = require('./carTexts');
   const fill = db.prepare("UPDATE cars SET description_en = ? WHERE description = ? AND (description_en IS NULL OR description_en = '')");
@@ -86,7 +84,6 @@ db.exec(`
 `);
 const insCat = db.prepare('INSERT OR IGNORE INTO categories (value, label) VALUES (?, ?)');
 [['hybrid', 'Hibrid'], ['electric', 'Elektrik'], ['sport', 'Sport']].forEach(([v, l]) => insCat.run(v, l));
-// Köhnə maşınlarda başqa kateqoriya varsa, onu da siyahıya əlavə edir
 db.prepare('SELECT DISTINCT category FROM cars WHERE category IS NOT NULL').all().forEach((r) => insCat.run(r.category, r.category));
 
 module.exports = db;

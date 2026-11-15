@@ -14,12 +14,10 @@ const slugify = (t) =>
 
 const toCategory = (r) => ({ id: r.id, value: r.value, label: r.label });
 
-// GET /api/categories
 router.get('/', (req, res) => {
   res.json(db.prepare('SELECT * FROM categories ORDER BY id').all().map(toCategory));
 });
 
-// POST /api/categories  { label }  (admin)
 router.post('/', authRequired, adminOnly, (req, res) => {
   const label = String((req.body || {}).label || '').trim();
   if (label.length < 2) return res.status(400).json({ message: 'Kateqoriya adı ən azı 2 simvol olmalıdır' });
@@ -31,7 +29,6 @@ router.post('/', authRequired, adminOnly, (req, res) => {
   res.status(201).json(toCategory(db.prepare('SELECT * FROM categories WHERE id = ?').get(info.lastInsertRowid)));
 });
 
-// DELETE /api/categories/:id  (admin; maşını olan kateqoriya silinmir)
 router.delete('/:id', authRequired, adminOnly, (req, res) => {
   const row = db.prepare('SELECT * FROM categories WHERE id = ?').get(req.params.id);
   if (!row) return res.status(404).json({ message: 'Kateqoriya tapılmadı' });

@@ -4,7 +4,6 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
 
-// JWT_SECRET (.env) verilməyibsə, server təsadüfi açar yaradır və data qovluğunda saxlayır
 function loadSecret() {
   if (process.env.JWT_SECRET) return process.env.JWT_SECRET;
   const file = path.join(__dirname, '..', '..', 'data', '.jwt-secret');
@@ -12,14 +11,12 @@ function loadSecret() {
     const saved = fs.readFileSync(file, 'utf8').trim();
     if (saved) return saved;
   } catch {
-    // fayl hələ yoxdur
   }
   const generated = crypto.randomBytes(32).toString('hex');
   try {
     fs.mkdirSync(path.dirname(file), { recursive: true });
     fs.writeFileSync(file, generated, { mode: 0o600 });
   } catch {
-    // yazmaq alınmasa, açar yalnız bu işə salınma üçün qalır
   }
   return generated;
 }
@@ -30,7 +27,6 @@ function signToken(userId) {
   return jwt.sign({ id: userId }, SECRET, { expiresIn: '7d' });
 }
 
-// Token yoxlayir, istifadecini req.user-e yazir
 function authRequired(req, res, next) {
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;

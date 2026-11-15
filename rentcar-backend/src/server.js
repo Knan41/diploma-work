@@ -4,7 +4,6 @@ const cors = require("cors");
 const path = require("path");
 const db = require("./db");
 
-// Baza boşdursa (məsələn, repo təzə yüklənib), ilkin məlumatları (maşınlar, admin) özü yükləyir
 const isEmpty =
   db.prepare("SELECT COUNT(*) AS c FROM users").get().c === 0 &&
   db.prepare("SELECT COUNT(*) AS c FROM cars").get().c === 0;
@@ -15,7 +14,6 @@ if (isEmpty) {
 
 const app = express();
 app.set("trust proxy", 1);
-// CLIENT_URL (məs. https://sayt.vercel.app) verilibsə yalnız həmin ünvana icazə verilir; verilməyibsə hamıya açıqdır
 const clientOrigins = (process.env.CLIENT_URL || "")
   .split(",")
   .map((s) => s.trim().replace(/\/+$/, ""))
@@ -23,13 +21,11 @@ const clientOrigins = (process.env.CLIENT_URL || "")
 app.use(cors(clientOrigins.length ? { origin: clientOrigins } : undefined));
 app.use(express.json({ limit: "8mb" }));
 
-// Şəkillər public/images qovluğundan verilir
 app.use(
   "/images",
   express.static(path.join(__dirname, "..", "public", "images")),
 );
 
-// Cavablardakı "/images/..." yollarını tam ünvana çevirir (frontend birbaşa <img src> işlədə bilsin)
 function absolutize(v, base) {
   if (Array.isArray(v)) return v.map((x) => absolutize(x, base));
   if (v && typeof v === "object") {

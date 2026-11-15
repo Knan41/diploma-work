@@ -1,4 +1,3 @@
-// Seed maşınlarının təsvirlərinin ingilis tərcüməsi (açar: Azərbaycan dilindəki təsvir)
 const descriptionsEn = {
   'Ən qənaətcil hibrid, şəhər içində çox az yanacaq sərf edir.': 'The most economical hybrid, uses very little fuel in the city.',
   'Sakit sürüş, geniş salon və az sərfiyyat.': 'Quiet ride, spacious cabin and low fuel consumption.',

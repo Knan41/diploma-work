@@ -8,7 +8,6 @@ const path = require('path');
 
 const router = express.Router();
 
-// Base64 (data URL) şəkli public/images qovluğuna yazır, "/images/..." yolunu qaytarır
 function saveImage(img) {
   if (!img || typeof img !== 'string' || !img.startsWith('data:image/')) return img || null;
   const m = img.match(/^data:image\/(png|jpe?g|webp);base64,(.+)$/);
@@ -48,8 +47,6 @@ const TRANSMISSIONS = ['automatic', 'manual'];
 
 const MAX_DESCRIPTION = 1000;
 
-// Admin təsviri bir dildə yazır (az və ya en), digər dilə avtomatik tərcümə olunur.
-// Qaytarır: { description (az), descriptionEn (en) }; tərcümə alınmasa digər dil null olur
 async function buildDescriptions(text, lang) {
   const clean = String(text || '').trim();
   if (!clean) return { description: null, descriptionEn: null };
@@ -80,7 +77,6 @@ function validateCar(body, partial = false) {
   return null;
 }
 
-// GET /api/cars?search=&brand=&category=&fuel=&transmission=&minPrice=&maxPrice=&available=true
 router.get('/', (req, res) => {
   const { search, brand, category, fuel, transmission, minPrice, maxPrice, available } = req.query;
   const where = [];
@@ -103,20 +99,17 @@ router.get('/', (req, res) => {
   res.json(db.prepare(sql).all(...params).map((r) => toCar(r, labels)));
 });
 
-// GET /api/cars/brands  (filtr üçün markalar)
 router.get('/brands', (req, res) => {
   const rows = db.prepare('SELECT DISTINCT brand FROM cars ORDER BY brand').all();
   res.json(rows.map((r) => r.brand));
 });
 
-// GET /api/cars/:id
 router.get('/:id', (req, res) => {
   const row = db.prepare('SELECT * FROM cars WHERE id = ?').get(req.params.id);
   if (!row) return res.status(404).json({ message: 'Maşın tapılmadı' });
   res.json(toCar(row));
 });
 
-// GET /api/cars/:id/booked-dates  (məşğul tarix aralıqları)
 router.get('/:id/booked-dates', (req, res) => {
   const rows = db
     .prepare(
@@ -128,7 +121,6 @@ router.get('/:id/booked-dates', (req, res) => {
   res.json(rows.map((r) => ({ startDate: r.start_date, endDate: r.end_date })));
 });
 
-// POST /api/cars  (admin)
 router.post('/', authRequired, adminOnly, async (req, res, next) => {
   try {
   const err = validateCar(req.body);
@@ -157,7 +149,6 @@ router.post('/', authRequired, adminOnly, async (req, res, next) => {
   }
 });
 
-// PUT /api/cars/:id  (admin)
 router.put('/:id', authRequired, adminOnly, async (req, res, next) => {
   try {
   const row = db.prepare('SELECT * FROM cars WHERE id = ?').get(req.params.id);
@@ -166,7 +157,6 @@ router.put('/:id', authRequired, adminOnly, async (req, res, next) => {
   if (err) return res.status(400).json({ message: err });
 
   const b = req.body;
-  // Təsvir göndərilibsə, yenidən tərcümə olunur; göndərilməyibsə hər iki dil olduğu kimi qalır
   const desc =
     b.description === undefined
       ? { description: row.description, descriptionEn: row.description_en }
@@ -190,7 +180,6 @@ router.put('/:id', authRequired, adminOnly, async (req, res, next) => {
   }
 });
 
-// DELETE /api/cars/:id  (admin)
 router.delete('/:id', authRequired, adminOnly, (req, res) => {
   const info = db.prepare('DELETE FROM cars WHERE id = ?').run(req.params.id);
   if (!info.changes) return res.status(404).json({ message: 'Maşın tapılmadı' });

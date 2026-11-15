@@ -6,7 +6,6 @@ const { signToken, authRequired } = require('../middleware/auth');
 const router = express.Router();
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// POST /api/auth/register
 router.post('/register', (req, res) => {
   const { name, email, password, phone } = req.body || {};
   if (!name || name.trim().length < 2)
@@ -31,7 +30,6 @@ router.post('/register', (req, res) => {
   res.status(201).json({ token: signToken(user.id), user });
 });
 
-// POST /api/auth/login
 router.post('/login', (req, res) => {
   const { email, password } = req.body || {};
   if (!email || !password)
@@ -45,12 +43,10 @@ router.post('/login', (req, res) => {
   res.json({ token: signToken(user.id), user });
 });
 
-// GET /api/auth/me
 router.get('/me', authRequired, (req, res) => {
   res.json(req.user);
 });
 
-// PUT /api/auth/profile  (ad və/və ya parol dəyiş)
 router.put('/profile', authRequired, (req, res) => {
   const { name, password } = req.body || {};
   if (name !== undefined) {
@@ -67,7 +63,6 @@ router.put('/profile', authRequired, (req, res) => {
   res.json(user);
 });
 
-// DELETE /api/auth/me  { password }  (istifadəçi öz hesabını silir; admin silə bilməz)
 router.delete('/me', authRequired, (req, res) => {
   if (req.user.role === 'admin')
     return res.status(403).json({ message: 'Admin hesabı silinə bilməz' });

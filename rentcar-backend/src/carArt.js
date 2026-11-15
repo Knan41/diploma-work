@@ -1,4 +1,3 @@
-// Real şəkil olmadıqda hər maşın üçün avtomatik maşın təsviri (SVG) yaradır
 const COLORS = { hybrid: ['#22c55e', '#15803d'], electric: ['#3b82f6', '#1d4ed8'], sport: ['#ef4444', '#b91c1c'] };
 const LABEL = { hybrid: 'HİBRİD', electric: 'ELEKTRİK', sport: 'SPORT' };
 
